@@ -93,9 +93,6 @@ export function QuickConvertWonDialog({
       queryClient.invalidateQueries({ queryKey: ["opportunities"] })
       toast.success("Lead converted and deal closed won! 🎉")
       onOpenChange(false)
-      
-      // Redirect to opportunities
-      navigate('/opportunities');
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Failed to convert lead")

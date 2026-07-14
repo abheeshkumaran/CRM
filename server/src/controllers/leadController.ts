@@ -42,22 +42,25 @@ export const getLeads = async (req: express.Request, res: express.Response) => {
         // Only apply organization-wide override for super_admin. 
         // Standard admins now fall into the hierarchy checking logic below.
         if (!user.isSuperAdmin && !isSuperAdmin(user)) {
-            // New Logic: Anyone can see their own leads + leads of their subordinates (recursively) + managed branches.
-            // Role names no longer strictly limit visibility if they have reporting subordinates.
-            const visibleUserIds = await getVisibleUserIds(user.id);
+            if (isAdmin(user)) {
+                const visibleUserIds = await getVisibleUserIds(user.id);
 
-            andConditions.push({
-                OR: [
-                    { assignedToId: { in: visibleUserIds } }, // Assigned to self or any subordinate/branch user
-                    { createdById: user.id },                // Created by the user (always visible)
-                    {
-                        AND: [
-                            { createdById: { in: visibleUserIds } }, // Created by subordinate
-                            { assignedToId: null }    // But not reassigned to someone else (who might be outside visibility)
-                        ]
-                    }
-                ]
-            });
+                andConditions.push({
+                    OR: [
+                        { assignedToId: { in: visibleUserIds } }, // Assigned to self or any subordinate/branch user
+                        { createdById: user.id },                // Created by the user (always visible)
+                        {
+                            AND: [
+                                { createdById: { in: visibleUserIds } }, // Created by subordinate
+                                { assignedToId: null }    // But not reassigned to someone else (who might be outside visibility)
+                            ]
+                        }
+                    ]
+                });
+            } else {
+                // Standard users only see leads where they are the assigned owner
+                andConditions.push({ assignedToId: user.id });
+            }
         }
 
         // Filter: Status
@@ -457,18 +460,23 @@ export const getLeadById = async (req: express.Request, res: express.Response) =
 
         // 2. Hierarchy Visibility scoping
         if (!user.isSuperAdmin && !isSuperAdmin(user)) {
-            const visibleUserIds = await getVisibleUserIds(user.id);
+            if (isAdmin(user)) {
+                const visibleUserIds = await getVisibleUserIds(user.id);
 
-            where.OR = [
-                { assignedToId: { in: visibleUserIds } }, // Assigned to self or any subordinate/branch user
-                { createdById: user.id },                // Created by the user (always visible)
-                {
-                    AND: [
-                        { createdById: { in: visibleUserIds } }, // Created by subordinate
-                        { assignedToId: null }    // But not reassigned to someone else
-                    ]
-                }
-            ];
+                where.OR = [
+                    { assignedToId: { in: visibleUserIds } }, // Assigned to self or any subordinate/branch user
+                    { createdById: user.id },                // Created by the user (always visible)
+                    {
+                        AND: [
+                            { createdById: { in: visibleUserIds } }, // Created by subordinate
+                            { assignedToId: null }    // But not reassigned to someone else
+                        ]
+                    }
+                ];
+            } else {
+                // Standard users only see leads where they are the assigned owner
+                where.assignedToId = user.id;
+            }
         }
 
         const lead = await prisma.lead.findFirst({

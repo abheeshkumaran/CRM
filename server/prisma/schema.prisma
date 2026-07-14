@@ -239,7 +239,7 @@ model Lead {
   qualityScore       Int        @default(0)
   isHotLead          Boolean    @default(false)
   lastScoredAt       DateTime?
-  status             LeadStatus @default(new)
+  status             String     @default("new")
   stage              String?
   customFields       Json?
   activities         Json?

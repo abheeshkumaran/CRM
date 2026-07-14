@@ -64,7 +64,6 @@ export function QuickConvertLostDialog({
       queryClient.invalidateQueries({ queryKey: ["opportunities"] })
       toast.success("Lead converted and marked as closed lost.")
       onOpenChange(false)
-      navigate('/leads')
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || "Failed to convert lead")

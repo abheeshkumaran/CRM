@@ -1181,25 +1181,6 @@ exports.LeadSource = exports.$Enums.LeadSource = {
   unassigned: 'unassigned'
 };
 
-exports.LeadStatus = exports.$Enums.LeadStatus = {
-  new: 'new',
-  contacted: 'contacted',
-  qualified: 'qualified',
-  nurturing: 'nurturing',
-  converted: 'converted',
-  lost: 'lost',
-  reborn: 'reborn',
-  re_enquiry: 're_enquiry',
-  interested: 'interested',
-  pre_qualified: 'pre_qualified',
-  not_interested: 'not_interested',
-  won: 'won',
-  new_opportunity: 'new_opportunity',
-  demo_scheduled: 'demo_scheduled',
-  proposal_sent: 'proposal_sent',
-  negotiation: 'negotiation'
-};
-
 exports.OpportunityType = exports.$Enums.OpportunityType = {
   NEW_BUSINESS: 'NEW_BUSINESS',
   UPSALE: 'UPSALE'

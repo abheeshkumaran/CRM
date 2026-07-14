@@ -340,7 +340,7 @@ export default function LeadDetailPage() {
         {/* Mobile Dashboard Actions / Desktop Full Actions */}
         <div className="flex flex-wrap items-center gap-2 px-2 sm:px-0">
           <div className="flex-1 min-w-[140px] sm:hidden">
-            <Select value={lead.status || "new"} onValueChange={(val) => updateStatusMutation.mutate(val)}>
+            <Select value={lead.status || "new"} onValueChange={(val) => updateStatusMutation.mutate(val)} disabled={lead.status === 'won' || lead.status === 'lost'}>
               <SelectTrigger className="w-full h-9 text-xs">
                 <div className="flex items-center gap-1.5 truncate">
                   <span className="text-muted-foreground font-medium">Status:</span>
@@ -380,7 +380,7 @@ export default function LeadDetailPage() {
           </div>
 
           <div className="hidden sm:block">
-            <Select value={lead.status || "new"} onValueChange={(val) => updateStatusMutation.mutate(val)}>
+            <Select value={lead.status || "new"} onValueChange={(val) => updateStatusMutation.mutate(val)} disabled={lead.status === 'won' || lead.status === 'lost'}>
               <SelectTrigger className="w-[170px] h-9 text-xs">
                 <div className="flex items-center gap-1.5 truncate">
                   <span className="text-muted-foreground font-medium">Status:</span>

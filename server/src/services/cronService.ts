@@ -86,7 +86,7 @@ export const initCronJobs = () => {
             const now = new Date();
             const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
-            const organisations = await prisma.findMany({
+            const organisations = await prisma.organisation.findMany({
                 where: {
                     status: 'active',
                     dailyReportTime: currentTime,
@@ -105,7 +105,7 @@ export const initCronJobs = () => {
             for (const org of organisations) {
                 try {
                     // 1. General Admin Report (Legacy logic)
-                    const admins = await prisma.findMany({
+                    const admins = await prisma.user.findMany({
                         where: { organisationId: org.id, role: 'admin', isActive: true }
                     });
 
@@ -113,7 +113,7 @@ export const initCronJobs = () => {
                     const adminReport = ReportingService.formatWhatsAppReport(stats, org.name);
 
                     // 2. Manager & Sales Manager Reports
-                    const managers = await prisma.findMany({
+                    const managers = await prisma.user.findMany({
                         where: {
                             organisationId: org.id,
                             role: { in: ['manager', 'sales_manager'] },
@@ -126,7 +126,7 @@ export const initCronJobs = () => {
                     // Send to Admins
                     for (const admin of admins) {
                         const targetPhone = admin.phone || org.contactPhone;
-                        
+
                         // WhatsApp
                         if (targetPhone && waClient) {
                             console.log(`[Cron] Sending general WhatsApp report to ${org.name} admin: ${admin.firstName} (${targetPhone})`);
@@ -171,7 +171,7 @@ export const initCronJobs = () => {
     cron.schedule('* * * * *', async () => {
         try {
             const now = new Date();
-            const pendingItems = await prisma.findMany({
+            const pendingItems = await prisma.workflowQueue.findMany({
                 where: {
                     status: 'pending',
                     executeAt: { lte: now }
@@ -262,7 +262,7 @@ export const initCronJobs = () => {
             const sevenDaysFromNow = new Date();
             sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
 
-            const organisations = await prisma.findMany({
+            const organisations = await prisma.organisation.findMany({
                 where: {
                     isDeleted: false,
                     status: 'active'
@@ -271,7 +271,7 @@ export const initCronJobs = () => {
 
             for (const org of organisations) {
                 const integrations = org.integrations as any;
-                
+
                 // Gather ALL connected accounts (metaAccounts array + primary meta field)
                 const allAccounts: any[] = [...(integrations?.metaAccounts || [])];
                 if (integrations?.meta?.connected) {
@@ -301,7 +301,7 @@ export const initCronJobs = () => {
 
                     if (alertTitle && alertMsg) {
                         // Check if we already sent a notification in the last 24 hours for this page
-                        const recentNotif = await prisma.findFirst({
+                        const recentNotif = await prisma.notification.findFirst({
                             where: {
                                 organisationId: org.id,
                                 title: alertTitle,
@@ -310,11 +310,11 @@ export const initCronJobs = () => {
                         });
 
                         if (!recentNotif) {
-                            const admins = await prisma.findMany({
+                            const admins = await prisma.user.findMany({
                                 where: { organisationId: org.id, role: { in: ['admin', 'super_admin'] }, isActive: true }
                             });
                             for (const admin of admins) {
-                                await prisma.create({
+                                await prisma.notification.create({
                                     data: {
                                         title: alertTitle,
                                         message: alertMsg,
