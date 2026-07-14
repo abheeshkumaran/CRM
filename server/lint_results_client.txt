@@ -1,0 +1,281 @@
+
+> client@0.0.0 lint
+> eslint .
+
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/CreateOpportunityDialog.tsx
+   34:79  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  141:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/CreateTaskDialog.tsx
+  75:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/EditOpportunityDialog.tsx
+   59:79  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+   60:25  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+   95:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/EditOpportunityDialog.tsx:95:13
+  93 |             // Update custom fields if opportunity changes (e.g. invalidation)
+  94 |             // But check if it's different to avoid loops if we were to depend on customFieldValues
+> 95 |             setCustomFieldValues((opportunity as any).customFields || {})
+     |             ^^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  96 |         }
+  97 |     }, [opportunity, form])
+  98 |  react-hooks/set-state-in-effect
+   95:50  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+  122:59  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/LogNoteDialog.tsx
+  54:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/dashboard/RecentActivityWidget.tsx
+  15:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/dashboard/TopPerformersWidget.tsx
+   2:10  error  'api' is defined but never used           @typescript-eslint/no-unused-vars
+  58:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/forms/DynamicCustomFields.tsx
+  6:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  7:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/landing/FeatureSection.tsx
+  10:5  error  'Smartphone' is defined but never used   @typescript-eslint/no-unused-vars
+  13:5  error  'Calendar' is defined but never used     @typescript-eslint/no-unused-vars
+  14:5  error  'ShieldCheck' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/landing/Footer.tsx
+  1:37  error  'Rocket' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/landing/Hero.tsx
+  4:49  error  'BarChart3' is defined but never used  @typescript-eslint/no-unused-vars
+  4:60  error  'Globe' is defined but never used      @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/landing/LandingNavbar.tsx
+  4:19  error  'Rocket' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/landing/Testimonials.tsx
+  3:34  error  'AvatarImage' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/settings/CustomFieldDialog.tsx
+   82:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/settings/CustomFieldDialog.tsx:82:13
+  80 |     useEffect(() => {
+  81 |         if (editingField) {
+> 82 |             setFormData({
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  83 |                 name: editingField.name,
+  84 |                 label: editingField.label,
+  85 |                 fieldType: editingField.fieldType,  react-hooks/set-state-in-effect
+   97:8   warning  React Hook useEffect has a missing dependency: 'open'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+  102:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/settings/CustomFieldDialog.tsx:102:13
+  100 |     useEffect(() => {
+  101 |         if (open && !editingField) {
+> 102 |             setFormData({
+      |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  103 |                 name: '',
+  104 |                 label: '',
+  105 |                 fieldType: 'text',                                react-hooks/set-state-in-effect
+  117:34  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  128:34  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  174:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  402:59  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+  403:62  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/settings/MetaAccountConfigDialog.tsx
+    2:10  error  'useState' is defined but never used         @typescript-eslint/no-unused-vars
+   35:10  error  'getOrganisation' is defined but never used  @typescript-eslint/no-unused-vars
+   40:14  error  Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+   41:19  error  Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+   73:59  error  Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  131:68  error  Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/shared/AssignmentRuleDialog.tsx
+  357:62  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/shared/AssignmentRuleDialog.tsx:357:62
+  355 |                                 <div className="border rounded-lg p-3 max-h-[150px] overflow-y-auto space-y-2">
+  356 |                                     {users?.map((user: { id: string, firstName: string, lastName: string, dailyLeadQuota?: number }) => {
+> 357 |                                         const currentUsers = form.watch('assignTo.users') || [];
+      |                                                              ^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  358 |                                         const isSelected = currentUsers.includes(user.id);
+  359 |                                         return (
+  360 |                                             <label key={user.id} className="flex items-center gap-2 cursor-pointer hover:bg-muted p-1 rounded">  react-hooks/incompatible-library
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/shared/Sidebar.tsx
+  38:26  error  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/super-admin/AssignPlanDialog.tsx
+   1:10  error    'useState' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  88:28  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/super-admin/AssignPlanDialog.tsx:88:28
+  86 |     };
+  87 |
+> 88 |     const selectedPlanId = useForm<AssignPlanFormData>().watch('planId') || currentPlanId;
+     |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  89 |     const selectedPlan = plans?.find((p: any) => p.id === selectedPlanId);
+  90 |
+  91 |     return (  react-hooks/incompatible-library
+  89:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/super-admin/EditOrganisationDialog.tsx
+    1:10  error    'useState' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   40:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   83:28  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/super-admin/EditOrganisationDialog.tsx:83:28
+  81 |     });
+  82 |
+> 83 |     const selectedPlanId = watch('planId');
+     |                            ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  84 |     const selectedPlan = plans?.find((p: any) => p.id === selectedPlanId);
+  85 |
+  86 |     // Reset form when organisation changes or dialog opens  react-hooks/incompatible-library
+   84:42  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  200:59  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/super-admin/GlobalRolesManagement.tsx
+   34:29  error  'CardDescription' is defined but never used  @typescript-eslint/no-unused-vars
+   66:34  error  Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  198:22  error  Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/ui/data-table.tsx
+  48:19  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/retro/Documents/D/MERN CRM/client/src/components/ui/data-table.tsx:48:19
+  46 |     const [dragOverRowId, setDragOverRowId] = useState<string | null>(null)
+  47 |
+> 48 |     const table = useReactTable({
+     |                   ^^^^^^^^^^^^^ TanStack Table's `useReactTable()` API returns functions that cannot be memoized safely
+  49 |         data,
+  50 |         columns,
+  51 |         getCoreRowModel: getCoreRowModel(),  react-hooks/incompatible-library
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/Dashboard.tsx
+  28:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  29:46  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  36:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/Dashboard.tsx:36:13
+  34 |         if (userInfo) {
+  35 |             const parsedUser = JSON.parse(userInfo);
+> 36 |             setUser(parsedUser);
+     |             ^^^^^^^ Avoid calling setState() directly within an effect
+  37 |             // Default to user's branch if they have one and are not super_admin (though analytics handles this)
+  38 |         }
+  39 |     }, []);  react-hooks/set-state-in-effect
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/contacts/columns.tsx
+  79:10  error  Fast refresh only works when a file only exports components. Move your component(s) to a separate file  react-refresh/only-export-components
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/leads/ActionsCell.tsx
+  6:34  error  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/notifications/index.tsx
+  5:41  error  'CardTitle' is defined but never used    @typescript-eslint/no-unused-vars
+  6:16  error  'TabsContent' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/reports/SalesBook.tsx
+   15:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+   18:23  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/reports/SalesBook.tsx:18:23
+  16 |     useEffect(() => {
+  17 |         const userInfo = localStorage.getItem('userInfo');
+> 18 |         if (userInfo) setUser(JSON.parse(userInfo));
+     |                       ^^^^^^^ Avoid calling setState() directly within an effect
+  19 |     }, []);
+  20 |
+  21 |     const isAdmin = user?.role === 'super_admin' || user?.role === 'admin';  react-hooks/set-state-in-effect
+   52:30  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  114:51  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  148:50  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/reports/UserSales.tsx
+   15:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+   18:23  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/reports/UserSales.tsx:18:23
+  16 |     useEffect(() => {
+  17 |         const userInfo = localStorage.getItem('userInfo');
+> 18 |         if (userInfo) setUser(JSON.parse(userInfo));
+     |                       ^^^^^^^ Avoid calling setState() directly within an effect
+  19 |     }, []);
+  20 |
+  21 |     const isAdmin = user?.role === 'super_admin' || user?.role === 'admin';  react-hooks/set-state-in-effect
+   82:51  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+   94:55  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+  138:54  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/settings/organisation/Branches.tsx
+   97:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  113:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  123:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  137:26  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/settings/team/index.tsx
+   21:5   error  'DialogTrigger' is defined but never used  @typescript-eslint/no-unused-vars
+   32:24  error  'Trash2' is defined but never used         @typescript-eslint/no-unused-vars
+   32:46  error  'User' is defined but never used           @typescript-eslint/no-unused-vars
+   90:34  error  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+   99:26  error  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  105:34  error  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  115:26  error  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  339:65  error  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/client/src/pages/tasks/columns.tsx
+  24:10  error  Fast refresh only works when a file only exports components. Move your component(s) to a separate file  react-refresh/only-export-components
+
+✖ 82 problems (77 errors, 5 warnings)
+

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    // --- PWA Auto-Cache Buster & Recovery System ---
+    (function() {
+      // 1. Version-based Cache Clear on Build Mismatch
+      // var currentVersion = "__BUILD_TIMESTAMP__";
+      var currentVersion = "1.0.0";
+      var storedVersion = localStorage.getItem('app_build_version');
+      
+        if (storedVersion && storedVersion !== currentVersion) {
+          console.log('[CacheBuster] App version mismatch! Stored:', storedVersion, 'Current:', currentVersion, '. Purging cache...');
+        
+        // Unregister service workers
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for (var i = 0; i < regs.length; i++) {
+              regs[i].unregister();
+            }
+          });
+        }
+        
+        // Delete all cache storage databases
+        if ('caches' in window) {
+          caches.keys().then(function(keys) {
+            for (var i = 0; i < keys.length; i++) {
+              caches.delete(keys[i]);
+            }
+          });
+        }
+        
+        localStorage.setItem('app_build_version', currentVersion);
+        sessionStorage.clear();
+        
+        // Trigger cache-busting hard reload after short delay for cleanup
+        setTimeout(function() {
+          window.location.reload(true);
+        }, 300);
+      } else {
+        localStorage.setItem('app_build_version', currentVersion);
+      }
+
+      // 2. Global Recovery for ChunkLoadError (fails to fetch dynamically imported chunks)
+      function clearCachesAndForceReload(errorContext) {
+        console.warn('[CacheBuster] Dynamic chunk load failure caught! Wiping cache to recover...', errorContext);
+        
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for (var i = 0; i < regs.length; i++) {
+              regs[i].unregister();
+            }
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(keys) {
+            for (var i = 0; i < keys.length; i++) {
+              caches.delete(keys[i]);
+            }
+          });
+        }
+        
+        // Clear session state and reload
+        sessionStorage.clear();
+        setTimeout(function() {
+          window.location.reload(true);
+        }, 200);
+      }
+
+      window.addEventListener('error', function(e) {
+        if (e && e.message && (
+          e.message.indexOf('Dynamically imported module') > -1 || 
+          e.message.indexOf('Failed to fetch') > -1 || 
+          e.message.indexOf('ChunkLoadError') > -1
+        )) {
+          clearCachesAndForceReload(e.message);
+        }
+      }, true);
+
+      window.addEventListener('unhandledrejection', function(e) {
+        if (e && e.reason) {
+          var msg = e.reason.message || String(e.reason);
+          if (
+            e.reason.name === 'ChunkLoadError' || 
+            msg.indexOf('Failed to fetch dynamically imported module') > -1 ||
+            msg.indexOf('Failed to fetch') > -1
+          ) {
+            clearCachesAndForceReload(msg);
+          }
+        }
+      });
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2E75B6" />
+  <meta name="color-scheme" content="light dark" />
+  
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link rel="apple-touch-icon" href="https://pypecrm.com/logo.png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <title>Pype CRM | Intelligent Lead Management & Sales Automation</title>
+  <meta name="description"
+    content="Accelerate your sales with Pype CRM. The all-in-one platform for lead tracking, automated follow-ups, and pipeline management. Close deals faster today." />
+  <meta name="keywords"
+    content="pype crm, crm, best crm, crm software, pipe crm, pipecrm, best crm software in india" />
+  <link rel="canonical" href="https://pypecrm.com" />
+
+  <!-- Structured Data Defaults -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://pypecrm.com",
+      "logo": "https://pypecrm.com/logo.png",
+      "name": "Pype CRM",
+      "description": "Intelligent Lead Management & Sales Automation Platform",
+      "sameAs": [
+        "https://www.linkedin.com/company/pypecrm",
+        "https://twitter.com/pypecrm"
+      ]
+    }
+  </script>
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:site_name" content="Pype CRM" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pypecrm.com/" />
+  <meta property="og:title" content="Pype CRM | Intelligent Lead Management & Sales Automation" />
+  <meta property="og:description"
+    content="Accelerate your sales with Pype CRM. The all-in-one platform for lead tracking, automated follow-ups, and pipeline management." />
+  <meta property="og:image" content="https://pypecrm.com/logo.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pype CRM | Lead Management & Sales Automation" />
+  <meta name="twitter:description"
+    content="Pype CRM helps your team manage leads and automate sales follow-ups with ease." />
+  <meta name="twitter:image" content="https://pypecrm.com/logo.png" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '878997861646422',
+        cookie: true,
+        xfbml: true,
+        version: 'v18.0'
+      });
+
+      FB.AppEvents.logPageView();
+    };
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+</body>
+
+</html>

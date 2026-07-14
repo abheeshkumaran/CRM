@@ -1,0 +1,1 @@
+import prisma from './src/config/prisma'; async function main() { const user = await prisma.user.findFirst({ where: { email: 'akhilp_manager@gmail.com' } }); console.log('USER ROLE:', user?.role); } main();

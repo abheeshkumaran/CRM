@@ -1,0 +1,12 @@
+node_modules
+.env
+.env.*
+!.env.example
+.DS_Store
+dist/
+build/
+*.log
+*.tar.gz
+*.zip
+.vscode/
+uploads/

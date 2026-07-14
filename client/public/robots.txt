@@ -1,0 +1,36 @@
+# public/robots.txt
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /leads
+Disallow: /contacts
+Disallow: /accounts
+Disallow: /opportunities
+Disallow: /marketing
+Disallow: /communications
+Disallow: /calendar
+Disallow: /tasks
+Disallow: /calls
+Disallow: /settings
+Disallow: /automation
+Disallow: /products
+Disallow: /quotes
+Disallow: /reports
+Disallow: /super-admin
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /*?*utm_
+Disallow: /*?*fbclid
+Disallow: /*?*gclid
+
+# Explicitly allow Googlebot to crawl JS/CSS assets
+User-agent: Googlebot
+Allow: /static/
+Allow: /*.js$
+Allow: /*.css$
+
+Sitemap: https://pypecrm.com/sitemap.xml

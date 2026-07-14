@@ -1,0 +1,992 @@
+
+> pype-server@1.0.0 lint
+> eslint src/**/*.ts
+
+
+/Users/retro/Documents/D/MERN CRM/server/src/config/cloudinary.ts
+  27:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/config/prisma.ts
+  27:5  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/accountController.ts
+   11:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   68:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  125:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  157:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  158:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  207:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  216:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  271:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  317:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/adController.ts
+   26:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   41:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   88:73  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   90:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  105:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  141:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  156:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  210:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  227:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/aiController.ts
+   48:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   56:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  123:22  warning  'geminiError' is defined but never used   @typescript-eslint/no-unused-vars
+  146:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/analyticsController.ts
+   25:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   64:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  213:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  232:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  298:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  345:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  358:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  401:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  439:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  548:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  602:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  616:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  624:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  669:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  698:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/apiKeyController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/assignmentRuleController.ts
+    7:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   17:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   38:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   86:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  132:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/auditController.ts
+   6:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/authController.ts
+   10:10  warning  'validatePassword' is defined but never used  @typescript-eslint/no-unused-vars
+   75:21  warning  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  198:21  warning  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  284:21  warning  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+  352:21  warning  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/branchController.ts
+    8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   43:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   73:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  112:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/bulkOperationsController.ts
+   17:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  338:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  346:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  496:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  504:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  640:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/callController.ts
+   16:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   51:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  160:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  217:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  221:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  270:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  364:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/callSettingsController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/campaignController.ts
+    7:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   12:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   33:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   37:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   78:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   81:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  100:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  168:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/caseController.ts
+   14:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   70:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  159:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  212:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/checkInController.ts
+   34:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   65:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/commissionController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/contactController.ts
+   11:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  165:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  168:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  217:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  218:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  259:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  262:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/customFieldController.ts
+    1:10  warning  'Request' is defined but never used       @typescript-eslint/no-unused-vars
+   18:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   46:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  179:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  259:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  301:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/documentController.ts
+   11:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   16:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   91:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  134:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  192:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/emailController.ts
+  11:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/emailListController.ts
+   7:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  13:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  69:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  90:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/enhancedLeadController.ts
+   18:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   30:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  104:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  216:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  229:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  335:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/eventController.ts
+   14:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  104:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  138:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/goalController.ts
+    8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   15:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   44:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  159:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  181:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  188:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/hierarchyController.ts
+   7:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/importController.ts
+  19:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  55:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/interactionController.ts
+   10:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  150:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  157:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  180:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  188:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  233:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  274:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/landingPageController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/leadController.ts
+    18:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+    19:22  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+    20:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   118:40  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   154:37  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   248:34  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   308:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   311:22  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   338:35  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   339:26  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   407:25  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   416:17  warning  'products' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   525:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   588:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   605:23  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   671:29  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   692:35  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   718:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   783:50  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   802:46  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   803:56  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   934:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   943:22  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+   969:33  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1005:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1034:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1043:21  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1075:30  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1079:22  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1136:40  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+  1155:40  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/licenseController.ts
+    7:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+    8:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   34:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   71:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  134:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  144:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  163:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  181:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/marketingController.ts
+    6:12  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   34:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   64:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  100:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/notificationController.ts
+   7:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  19:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  71:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/opportunityController.ts
+   13:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   70:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  145:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  201:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  202:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  261:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  261:93  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  311:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  320:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/organisationController.ts
+    9:21   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   53:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   66:21   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   97:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  170:73   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  185:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  199:41   error    A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+  221:124  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  281:21   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  295:44   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  320:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  340:21   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  377:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  396:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  443:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/pipelineController.ts
+    6:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   13:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   40:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   89:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  130:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/productController.ts
+   12:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   56:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  112:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  129:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  175:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  177:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  211:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  245:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/profileController.ts
+   7:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  57:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/quoteController.ts
+   12:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  113:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  152:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  154:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  184:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  186:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  210:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  241:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  284:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  286:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  318:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  320:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/reportController.ts
+   12:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   20:22   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   48:44   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   54:45   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   78:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:27   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  172:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  195:22   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  221:43   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  222:40   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  222:65   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  222:98   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  239:32   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  240:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  240:52   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  240:82   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  263:30   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  305:42   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  305:72   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  305:110  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  315:26   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  344:39   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  346:37   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  346:62   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  346:95   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/roleController.ts
+   70:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   89:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   89:74  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   92:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  133:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  154:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  182:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  236:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  297:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/salesTargetController.ts
+    8:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   43:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  318:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  421:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  444:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  500:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  554:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  583:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  609:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  623:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  661:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  701:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/searchController.ts
+   27:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  250:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  258:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  347:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  355:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  382:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/smsCampaignController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  58:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  92:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/ssoController.ts
+  62:67  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  62:78  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/stripeController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/subscriptionPlanController.ts
+  19:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/superAdminController.ts
+    7:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  124:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  146:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  187:75  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  239:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  260:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  283:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  301:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/syncController.ts
+  8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/taskController.ts
+    8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   31:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   65:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   99:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  173:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  176:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  235:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  236:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  273:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  276:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/teamController.ts
+    9:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   59:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   83:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  154:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/telephonyController.ts
+   34:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   41:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  124:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  159:38  error    A `require()` style import is forbidden   @typescript-eslint/no-require-imports
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/territoryController.ts
+    8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   18:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   31:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   49:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   85:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   96:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  125:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/timelineController.ts
+  90:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/uploadController.ts
+   13:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  123:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  164:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  176:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  219:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/userController.ts
+   13:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   75:77  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   76:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   77:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  158:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  188:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  208:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  289:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  360:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  448:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  452:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  478:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  479:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/webFormController.ts
+   8:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/webhookController.ts
+   8:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  25:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:84  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  58:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:76  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  82:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  94:76  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/whatsAppCampaignController.ts
+   16:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   37:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  164:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/whatsAppController.ts
+   27:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  141:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  155:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  183:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  258:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  285:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  310:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  332:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  382:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  406:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  447:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  486:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  510:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  524:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  593:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  620:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  625:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  625:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  645:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  671:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  680:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/controllers/workflowController.ts
+   12:30  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+   50:30  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+   91:30  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+   93:22  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+  113:30  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+  127:33  warning  '_orgId' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  127:54  warning  '_createdById' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  127:84  warning  '_count' is assigned a value but never used        @typescript-eslint/no-unused-vars
+  156:30  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+  198:30  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+  216:25  warning  Unexpected any. Specify a different type           @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/apiKeyMiddleware.ts
+  31:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/authMiddleware.ts
+   7:12  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/csrfProtection.ts
+    6:14  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   30:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   39:73  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   47:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/dataIsolation.ts
+   12:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   20:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   25:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   39:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   49:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   70:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  124:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  131:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/securityAudit.ts
+    9:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   21:15  error    Unnecessary escape character: \/          no-useless-escape
+   44:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  144:74  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  177:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  260:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/subscriptionMiddleware.ts
+  25:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/middleware/superAdminProtection.ts
+   3:8   warning  'crypto' is defined but never used                        @typescript-eslint/no-unused-vars
+  10:7   warning  'SUPER_ADMIN_ID_HASH' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  91:30  warning  Unexpected any. Specify a different type                  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/adRoutes.ts
+  20:69  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:57  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  23:67  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:67  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  27:76  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:97  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:82  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:70  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  33:68  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/apiRoutes.ts
+  18:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  97:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/branchRoutes.ts
+  2:19  warning  'admin' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/bulkRoutes.ts
+  12:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  19:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:69  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/goalRoutes.ts
+  10:61  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/leadRoutes.ts
+   9:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:57  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  11:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  12:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  13:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  14:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  17:67  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  18:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  19:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:43  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  21:70  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  23:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/metaAuthRoutes.ts
+   75:75   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  214:106  warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  227:58   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  242:59   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  262:58   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  284:19   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  307:33   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  336:23   error    Optional chain expressions can return undefined by design - using a non-null assertion is unsafe and wrong  @typescript-eslint/no-non-null-asserted-optional-chain
+  347:58   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  356:31   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  391:19   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  403:23   error    Optional chain expressions can return undefined by design - using a non-null assertion is unsafe and wrong  @typescript-eslint/no-non-null-asserted-optional-chain
+  410:52   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+  427:19   warning  Unexpected any. Specify a different type                                                                    @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/uploadRoutes.ts
+  14:16  warning  'cloudinary' is defined but never used         @typescript-eslint/no-unused-vars
+  15:10  warning  'CloudinaryStorage' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/whatsAppCampaignRoutes.ts
+   9:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  10:70  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  11:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  12:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/routes/whatsAppRoutes.ts
+  36:96   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:112  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:76   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  39:66   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:86   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  41:89   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:109  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  43:139  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:61   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  45:68   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:105  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:80   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  48:66   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  49:41   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:42   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:77   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/scripts/check_rules.ts
+  14:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/scripts/list-orgs.ts
+  22:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/scripts/migrate-whatsapp-integration.ts
+  28:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/scripts/update-meta-token.ts
+  34:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/CampaignProcessor.ts
+   13:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  194:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  207:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  217:89  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  225:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  254:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  292:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  343:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  344:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  412:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/CustomFieldValidationService.ts
+  12:95  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/DistributionService.ts
+   15:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   53:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:43  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  163:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  163:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  180:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  180:98  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  181:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  218:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  266:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  313:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  325:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  350:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  400:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  402:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  425:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  441:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  466:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  477:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  498:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/DocumentService.ts
+  64:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/DuplicateLeadService.ts
+    6:20  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+   17:21  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+   34:31  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+   87:23  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+   90:16  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  104:59  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  106:64  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  164:29  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  164:34  warning  'organisationId' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  190:31  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  190:55  warning  'organisationId' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  226:59  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  229:62  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  241:62  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+  266:74  warning  Unexpected any. Specify a different type                                          @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/EmailService.ts
+  66:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/GoalService.ts
+  89:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/ImportJobService.ts
+    7:86  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   39:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   60:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   67:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   83:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  107:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  164:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  210:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/LeadScoringService.ts
+  19:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/MarketingAPIService.ts
+   22:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   44:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   88:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  100:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/MetaConversionService.ts
+  39:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  90:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/MetaIntegrationService-simple.ts
+   7:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  43:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  74:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  82:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  82:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/MetaIntegrationService.ts
+   11:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   50:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   61:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   88:43  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  167:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  205:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  218:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  253:73  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  325:85  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  336:54  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  357:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  384:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  384:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/MetaLeadService.ts
+   34:57  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:75  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   45:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   49:56  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   77:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   88:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/MetaService.ts
+   13:70  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   14:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   26:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   57:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   67:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  112:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  196:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  225:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/NotificationService.ts
+  44:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/QuotePdfService.ts
+   5:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  71:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/ReportingService.ts
+  72:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/SSOService.ts
+   8:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  37:56  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  50:14  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  51:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/SalesTargetService.ts
+  154:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/StripeService.ts
+   14:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   24:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  103:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  131:51  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  149:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  159:51  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  172:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  182:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/TaskService.ts
+  8:18  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  9:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/WebhookService.ts
+   7:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  48:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/WhatsAppIntegrationService.ts
+    8:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   39:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   56:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:79  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   97:28  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:80  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  231:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  238:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  308:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  308:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/WhatsAppService.ts
+   55:50   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   86:70   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:24   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   99:29   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:109  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  147:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  177:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:33   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  217:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  237:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  257:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  276:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  300:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  313:21   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  330:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  350:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  377:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  406:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  433:25   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/WorkflowEngine.ts
+   14:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   47:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   47:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   80:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  152:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  166:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  228:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/services/telephonyService.ts
+  29:50  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/apiResponse.ts
+   7:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  19:12  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  52:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  75:16  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/auditLogger.ts
+  9:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/envValidator.ts
+  164:18  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/hierarchyUtils.ts
+  41:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/logger.ts
+   19:13   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   20:16   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   79:36   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   79:112  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   83:98   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   87:98   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   91:99   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   96:94   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  100:50   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  104:100  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  108:54   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  112:80   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:40   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:56   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  120:81   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  124:57   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/passwordValidator.ts
+   31:50  error    Unnecessary escape character: \[          no-useless-escape
+   31:67  error    Unnecessary escape character: \/          no-useless-escape
+  121:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  121:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/retro/Documents/D/MERN CRM/server/src/utils/validation.ts
+   18:41  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   27:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:68  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   75:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  112:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 751 problems (8 errors, 743 warnings)
+
