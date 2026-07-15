@@ -4,7 +4,7 @@ import { getOrgId, getSubordinateIds, getVisibleUserIds } from '../utils/hierarc
 import { DistributionService } from '../services/distributionService';
 import { WorkflowEngine } from '../services/workflowEngine';
 import { NotificationService } from '../services/notificationService';
-import { isAdmin, isSuperAdmin, isOrgAdmin } from '../utils/roleUtils';
+import { isAdmin, isSuperAdmin, isOrgAdmin, isManager } from '../utils/roleUtils';
 import { GeoLocationService } from '../services/geoLocationService';
 import { FollowUpService } from '../services/followUpService';
 import { TaskService } from '../services/taskService';
@@ -42,7 +42,7 @@ export const getLeads = async (req: express.Request, res: express.Response) => {
         // Only apply organization-wide override for super_admin. 
         // Standard admins now fall into the hierarchy checking logic below.
         if (!user.isSuperAdmin && !isSuperAdmin(user)) {
-            if (isAdmin(user)) {
+            if (isAdmin(user) || isOrgAdmin(user) || isManager(user)) {
                 const visibleUserIds = await getVisibleUserIds(user.id);
 
                 andConditions.push({

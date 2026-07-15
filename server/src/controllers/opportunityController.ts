@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getOrgId, getSubordinateIds, getVisibleUserIds } from '../utils/hierarchyUtils';
 import { NotificationService } from '../services/notificationService';
+import { isSuperAdmin, isAdmin } from '../utils/roleUtils';
 import prisma from '../config/prisma';
 
 
@@ -15,7 +16,7 @@ export const getOpportunities = async (req: Request, res: Response) => {
         const where: any = { isDeleted: false };
 
         // 1. Organisation Scoping
-        if (user.role === 'super_admin') {
+        if (isSuperAdmin(user)) {
             if (req.query.organisationId) {
                 where.organisationId = String(req.query.organisationId);
             }
@@ -28,7 +29,7 @@ export const getOpportunities = async (req: Request, res: Response) => {
         }
 
         // 2. Hierarchy Visibility
-        if (user.role !== 'super_admin' && user.role !== 'admin') {
+        if (!isSuperAdmin(user) && !isAdmin(user)) {
             const visibleUserIds = await getVisibleUserIds(user.id);
             // If explicit ownerId is requested, ensure it's within visible range
             if (req.query.ownerId && visibleUserIds.includes(String(req.query.ownerId))) {

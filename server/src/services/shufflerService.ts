@@ -55,8 +55,8 @@ export const runShuffler = async () => {
                     AND: [
                         {
                             OR: [
-                                { name: { in: ['admin', 'org_admin', 'organization admin', 'super admin'], mode: 'insensitive' } },
-                                { roleKey: { in: ['admin', 'org_admin', 'organization admin', 'super_admin'] } }
+                                { name: { in: ['admin', 'org_admin', 'organization admin', 'super admin', 'manager'], mode: 'insensitive' } },
+                                { roleKey: { in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager'] } }
                             ]
                         },
                         {
@@ -68,7 +68,7 @@ export const runShuffler = async () => {
                     ]
                 }
             });
-            const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', ...adminRoles.map(r => r.roleKey)];
+            const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager', ...adminRoles.map(r => r.roleKey)];
 
             // Find eligible active users in the org
             const activeUsers = await prisma.user.findMany({
@@ -76,8 +76,21 @@ export const runShuffler = async () => {
                     organisationId: org.id,
                     isActive: true,
                     isOffDuty: false,
-                    role: {
-                        notIn: excludedRoleKeys
+                    NOT: {
+                        OR: [
+                            {
+                                role: {
+                                    in: excludedRoleKeys,
+                                    mode: 'insensitive'
+                                }
+                            },
+                            {
+                                position: {
+                                    in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'super admin', 'manager'],
+                                    mode: 'insensitive'
+                                }
+                            }
+                        ]
                     }
                 },
                 select: { id: true },
@@ -95,23 +108,34 @@ export const runShuffler = async () => {
 
             let reassignedCount = 0;
 
-            for (const lead of eligibleLeads) {
-                // If there's only 1 active user and they already own the lead, skip
-                if (activeUsers.length === 1 && activeUsers[0].id === lead.assignedToId) {
-                    continue;
+            let slots: any[] = [];
+            let nextIndex = lastAssignedIndex;
+            for (let i = 0; i < eligibleLeads.length; i++) {
+                nextIndex = (nextIndex + 1) % activeUsers.length;
+                slots.push(activeUsers[nextIndex]);
+            }
+
+            // Resolve collisions where a slot matches the lead's current owner
+            if (activeUsers.length > 1) {
+                for (let i = 0; i < eligibleLeads.length; i++) {
+                    if (eligibleLeads[i].assignedToId === slots[i].id) {
+                        for (let j = 0; j < eligibleLeads.length; j++) {
+                            if (i !== j && eligibleLeads[i].assignedToId !== slots[j].id && eligibleLeads[j].assignedToId !== slots[i].id) {
+                                let temp = slots[i];
+                                slots[i] = slots[j];
+                                slots[j] = temp;
+                                break;
+                            }
+                        }
+                    }
                 }
+            }
 
-                // Advance pointer
-                let nextIndex = (lastAssignedIndex + 1) % activeUsers.length;
-                let targetUser = activeUsers[nextIndex];
 
-                // If target is the current owner, skip to the next person
-                if (targetUser.id === lead.assignedToId && activeUsers.length > 1) {
-                    nextIndex = (nextIndex + 1) % activeUsers.length;
-                    targetUser = activeUsers[nextIndex];
-                }
 
-                lastAssignedIndex = nextIndex;
+            for (let i = 0; i < eligibleLeads.length; i++) {
+                const lead = eligibleLeads[i];
+                const targetUser = slots[i];
 
                 if (targetUser.id !== lead.assignedToId) {
                     await prisma.lead.update({
@@ -147,6 +171,9 @@ export const runShuffler = async () => {
                     reassignedCount++;
                 }
             }
+
+            // After all assignments, update the lastAssignedIndex for the next run
+            lastAssignedIndex = nextIndex;
 
             // Save the persistent round-robin pointer
             if (lastAssignedIndex !== -1 && activeUsers[lastAssignedIndex]) {
@@ -187,8 +214,8 @@ export const forceShuffleOrg = async (organisationId: string) => {
                 AND: [
                     {
                         OR: [
-                            { name: { in: ['admin', 'org_admin', 'organization admin', 'super admin'], mode: 'insensitive' } },
-                            { roleKey: { in: ['admin', 'org_admin', 'organization admin', 'super_admin'] } }
+                            { name: { in: ['admin', 'org_admin', 'organization admin', 'super admin', 'manager'], mode: 'insensitive' } },
+                            { roleKey: { in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager'] } }
                         ]
                     },
                     {
@@ -200,7 +227,7 @@ export const forceShuffleOrg = async (organisationId: string) => {
                 ]
             }
         });
-        const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', ...adminRoles.map(r => r.roleKey)];
+        const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager', ...adminRoles.map(r => r.roleKey)];
 
         // Find eligible leads (bypass date checks, bypass time checks)
         const eligibleLeads = await prisma.lead.findMany({
@@ -223,8 +250,21 @@ export const forceShuffleOrg = async (organisationId: string) => {
                 organisationId: org.id,
                 isActive: true,
                 isOffDuty: false,
-                role: {
-                    notIn: excludedRoleKeys
+                NOT: {
+                    OR: [
+                        {
+                            role: {
+                                in: excludedRoleKeys,
+                                mode: 'insensitive'
+                            }
+                        },
+                        {
+                            position: {
+                                in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'super admin', 'manager'],
+                                mode: 'insensitive'
+                            }
+                        }
+                    ]
                 }
             },
             select: { id: true },
@@ -240,23 +280,32 @@ export const forceShuffleOrg = async (organisationId: string) => {
 
         let reassignedCount = 0;
 
-        for (const lead of eligibleLeads) {
-            // If there's only 1 active user and they already own the lead, skip
-            if (activeUsers.length === 1 && activeUsers[0].id === lead.assignedToId) {
-                continue;
+        let slots: any[] = [];
+        let nextIndex = lastAssignedIndex;
+        for (let i = 0; i < eligibleLeads.length; i++) {
+            nextIndex = (nextIndex + 1) % activeUsers.length;
+            slots.push(activeUsers[nextIndex]);
+        }
+
+        // Resolve collisions where a slot matches the lead's current owner
+        if (activeUsers.length > 1) {
+            for (let i = 0; i < eligibleLeads.length; i++) {
+                if (eligibleLeads[i].assignedToId === slots[i].id) {
+                    for (let j = 0; j < eligibleLeads.length; j++) {
+                        if (i !== j && eligibleLeads[i].assignedToId !== slots[j].id && eligibleLeads[j].assignedToId !== slots[i].id) {
+                            let temp = slots[i];
+                            slots[i] = slots[j];
+                            slots[j] = temp;
+                            break;
+                        }
+                    }
+                }
             }
+        }
 
-            // Advance pointer
-            let nextIndex = (lastAssignedIndex + 1) % activeUsers.length;
-            let targetUser = activeUsers[nextIndex];
-
-            // If target is the current owner, skip to the next person
-            if (targetUser.id === lead.assignedToId && activeUsers.length > 1) {
-                nextIndex = (nextIndex + 1) % activeUsers.length;
-                targetUser = activeUsers[nextIndex];
-            }
-
-            lastAssignedIndex = nextIndex;
+        for (let i = 0; i < eligibleLeads.length; i++) {
+            const lead = eligibleLeads[i];
+            const targetUser = slots[i];
 
             if (targetUser.id !== lead.assignedToId) {
                 await prisma.lead.update({
@@ -271,8 +320,8 @@ export const forceShuffleOrg = async (organisationId: string) => {
                         fieldName: 'assignedToId',
                         oldValue: lead.assignedToId,
                         newValue: targetUser.id,
-                        changedById: null, // System action
-                        reason: 'Manual force lead shuffler execution'
+                        changedById: null, // Force shuffle action
+                        reason: 'Force lead shuffler execution'
                     }
                 });
 
@@ -280,7 +329,7 @@ export const forceShuffleOrg = async (organisationId: string) => {
                 await prisma.notification.create({
                     data: {
                         title: 'New Lead Assigned',
-                        message: `A lead has been automatically reassigned to you by the Shuffler.`,
+                        message: `A lead has been reassigned to you by the manual Shuffler.`,
                         type: 'popup',
                         relatedResource: 'lead',
                         relatedId: lead.id,
@@ -292,6 +341,9 @@ export const forceShuffleOrg = async (organisationId: string) => {
                 reassignedCount++;
             }
         }
+
+        // Save the persistent round-robin pointer
+        lastAssignedIndex = nextIndex;
 
         console.log(`[ShufflerService] Force successfully reassigned ${reassignedCount} leads in Org: ${org.name}`);
         // Save the persistent round-robin pointer

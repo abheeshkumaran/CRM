@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { Card, CardContent } from "@/components/ui/card"
 import { getUsers, getProfile } from "@/services/settingsService"
-import { isAdmin, canAccessSettings, isBranchManager, isManager } from "@/lib/utils"
+import { isAdmin, canAccessSettings, isBranchManager, isManager, checkRole } from "@/lib/utils"
 
 import {
   User,
@@ -216,6 +216,11 @@ export default function SettingsPage() {
       // Profile and Notifications are always visible to everyone
       if (section.href === '/settings/profile' || section.href === '/settings/notifications') {
         return true;
+      }
+
+      // If roles are explicitly defined on the section, use those
+      if (section.roles && section.roles.length > 0) {
+        return checkRole(user, section.roles);
       }
 
       // All other settings are strictly admin only

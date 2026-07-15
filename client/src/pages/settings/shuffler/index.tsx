@@ -27,6 +27,7 @@ export default function ShufflerSettingsPage() {
   const [shufflingLeads, setShufflingLeads] = useState("")
   const [shuffleBefore, setShuffleBefore] = useState("")
   const [shuffleTime, setShuffleTime] = useState("")
+  const [isAutoShufflingOn, setIsAutoShufflingOn] = useState(false)
 
   const { data: org, isLoading } = useQuery({
     queryKey: ['organisation'],
@@ -130,6 +131,20 @@ export default function ShufflerSettingsPage() {
           </p>
 
           <div className="grid gap-6 mt-8 max-w-2xl">
+            <div className="flex items-center justify-between border border-border p-4 rounded-lg">
+              <div>
+                <Label className="text-base font-semibold">Auto Shuffling</Label>
+                <p className="text-sm text-muted-foreground">Turn the automatic lead shuffler on or off</p>
+              </div>
+              <Button
+                type="button"
+                onClick={() => setIsAutoShufflingOn(!isAutoShufflingOn)}
+                className={`${isAutoShufflingOn ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"} text-white min-w-[80px]`}
+              >
+                {isAutoShufflingOn ? "ON" : "OFF"}
+              </Button>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="lead-status">Lead Status</Label>
               <Select value={selectedStatus} onValueChange={handleStatusSelect}>

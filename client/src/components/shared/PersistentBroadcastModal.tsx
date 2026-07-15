@@ -58,12 +58,29 @@ export function PersistentBroadcastModal() {
   const markAsReadMutation = useMutation({
     mutationFn: async (id: string) => {
       await markAsRead(id);
+      return id;
     },
-    onSuccess: () => {
-      // Invalidate queries to sync with Bell count and popups list
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ['unread-popup-notifications'] });
+      const previous = queryClient.getQueryData(['unread-popup-notifications']);
+      
+      queryClient.setQueryData(['unread-popup-notifications'], (old: any) => {
+        if (!old || !old.notifications) return old;
+        return {
+          ...old,
+          notifications: old.notifications.filter((n: any) => n.id !== id)
+        };
+      });
+      return { previous };
+    },
+    onError: (err, newTodo, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(['unread-popup-notifications'], context.previous);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['unread-popup-notifications'] });
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      refetch();
     },
   });
 
