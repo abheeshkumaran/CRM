@@ -88,8 +88,31 @@ export const runShuffler = async () => {
                 continue;
             }
 
-            // Reassign leads round-robin based on current owner's index
-            let fallbackUserIndex = 0;
+            // Fetch past owners for eligible leads to ensure a strict cycle per lead
+            const leadHistories = await prisma.leadHistory.findMany({
+                where: {
+                    leadId: { in: eligibleLeads.map(l => l.id) },
+                    fieldName: 'assignedToId'
+                },
+                orderBy: { createdAt: 'desc' },
+                select: { leadId: true, oldValue: true }
+            });
+
+            const timelineByLead = new Map<string, string[]>();
+            for (const lead of eligibleLeads) {
+                timelineByLead.set(lead.id, lead.assignedToId ? [lead.assignedToId] : []);
+            }
+            for (const history of leadHistories) {
+                if (history.oldValue) {
+                    timelineByLead.get(history.leadId)!.push(history.oldValue);
+                }
+            }
+
+            // Reassign leads ensuring an even distribution
+            const assignedCounts = new Map<string, number>();
+            activeUsers.forEach(u => assignedCounts.set(u.id, 0));
+
+            let lastAssignedIndex = -1;
             let reassignedCount = 0;
 
             for (const lead of eligibleLeads) {
@@ -98,22 +121,59 @@ export const runShuffler = async () => {
                     continue;
                 }
 
-                const currentOwnerIndex = activeUsers.findIndex(u => u.id === lead.assignedToId);
-                let targetUser;
+                const timeline = timelineByLead.get(lead.id) || [];
+                
+                // Exclude current owner from available users for this lead
+                const availableUsers = activeUsers.length > 1 
+                    ? activeUsers.filter(u => u.id !== lead.assignedToId)
+                    : activeUsers;
 
-                if (currentOwnerIndex !== -1) {
-                    // Assign to the next user in the cycle
-                    targetUser = activeUsers[(currentOwnerIndex + 1) % activeUsers.length];
-                } else {
-                    // Fallback round-robin if current owner is not in the active users list
-                    targetUser = activeUsers[fallbackUserIndex % activeUsers.length];
-                    fallbackUserIndex++;
+                if (availableUsers.length === 0) continue;
 
-                    if (targetUser.id === lead.assignedToId && activeUsers.length > 1) {
-                        targetUser = activeUsers[fallbackUserIndex % activeUsers.length];
-                        fallbackUserIndex++;
+                // Find how long ago each user owned it
+                const userOwnershipAge = new Map<string, number>();
+                let maxAge = -1;
+
+                for (const u of availableUsers) {
+                    const idx = timeline.indexOf(u.id);
+                    const age = idx === -1 ? Infinity : idx;
+                    userOwnershipAge.set(u.id, age);
+                    if (age > maxAge) {
+                        maxAge = age;
                     }
                 }
+
+                // Filter candidates to only those who owned it the longest ago (or never)
+                const cycleCandidates = availableUsers.filter(u => userOwnershipAge.get(u.id) === maxAge);
+
+                // From these valid cycle candidates, balance the distribution using minCount
+                let minCount = Infinity;
+                for (const c of cycleCandidates) {
+                    const count = assignedCounts.get(c.id) || 0;
+                    if (count < minCount) minCount = count;
+                }
+
+                // Get all candidates who have the minimum count
+                const minCountCandidates = cycleCandidates.filter(c => (assignedCounts.get(c.id) || 0) === minCount);
+
+                // Sort candidates to maintain a round-robin cycle based on lastAssignedIndex
+                minCountCandidates.sort((a, b) => {
+                    const indexA = activeUsers.findIndex(u => u.id === a.id);
+                    const indexB = activeUsers.findIndex(u => u.id === b.id);
+
+                    const distA = indexA > lastAssignedIndex ? indexA - lastAssignedIndex : indexA - lastAssignedIndex + activeUsers.length;
+                    const distB = indexB > lastAssignedIndex ? indexB - lastAssignedIndex : indexB - lastAssignedIndex + activeUsers.length;
+
+                    return distA - distB;
+                });
+
+                const targetUser = minCountCandidates[0];
+
+                // Track assignment for the even distribution
+                assignedCounts.set(targetUser.id, (assignedCounts.get(targetUser.id) || 0) + 1);
+                lastAssignedIndex = activeUsers.findIndex(u => u.id === targetUser.id);
+                // Also update timeline so it doesn't get assigned to them again if processed again (though we loop once)
+                timeline.unshift(targetUser.id);
 
                 if (targetUser.id !== lead.assignedToId) {
                     await prisma.lead.update({
@@ -227,8 +287,31 @@ export const forceShuffleOrg = async (organisationId: string) => {
             return { success: false, message: 'No active non-admin users available to receive leads.' };
         }
 
-        // Reassign leads round-robin based on current owner's index
-        let fallbackUserIndex = 0;
+        // Fetch past owners for eligible leads to ensure a strict cycle per lead
+        const leadHistories = await prisma.leadHistory.findMany({
+            where: {
+                leadId: { in: eligibleLeads.map(l => l.id) },
+                fieldName: 'assignedToId'
+            },
+            orderBy: { createdAt: 'desc' },
+            select: { leadId: true, oldValue: true }
+        });
+
+        const timelineByLead = new Map<string, string[]>();
+        for (const lead of eligibleLeads) {
+            timelineByLead.set(lead.id, lead.assignedToId ? [lead.assignedToId] : []);
+        }
+        for (const history of leadHistories) {
+            if (history.oldValue) {
+                timelineByLead.get(history.leadId)!.push(history.oldValue);
+            }
+        }
+
+        // Reassign leads ensuring an even distribution
+        const assignedCounts = new Map<string, number>();
+        activeUsers.forEach(u => assignedCounts.set(u.id, 0));
+
+        let lastAssignedIndex = -1;
         let reassignedCount = 0;
 
         for (const lead of eligibleLeads) {
@@ -237,22 +320,59 @@ export const forceShuffleOrg = async (organisationId: string) => {
                 continue;
             }
 
-            const currentOwnerIndex = activeUsers.findIndex(u => u.id === lead.assignedToId);
-            let targetUser;
+            const timeline = timelineByLead.get(lead.id) || [];
+            
+            // Exclude current owner from available users for this lead
+            const availableUsers = activeUsers.length > 1 
+                ? activeUsers.filter(u => u.id !== lead.assignedToId)
+                : activeUsers;
 
-            if (currentOwnerIndex !== -1) {
-                // Assign to the next user in the cycle
-                targetUser = activeUsers[(currentOwnerIndex + 1) % activeUsers.length];
-            } else {
-                // Fallback round-robin if current owner is not in the active users list
-                targetUser = activeUsers[fallbackUserIndex % activeUsers.length];
-                fallbackUserIndex++;
+            if (availableUsers.length === 0) continue;
 
-                if (targetUser.id === lead.assignedToId && activeUsers.length > 1) {
-                    targetUser = activeUsers[fallbackUserIndex % activeUsers.length];
-                    fallbackUserIndex++;
+            // Find how long ago each user owned it
+            const userOwnershipAge = new Map<string, number>();
+            let maxAge = -1;
+
+            for (const u of availableUsers) {
+                const idx = timeline.indexOf(u.id);
+                const age = idx === -1 ? Infinity : idx;
+                userOwnershipAge.set(u.id, age);
+                if (age > maxAge) {
+                    maxAge = age;
                 }
             }
+
+            // Filter candidates to only those who owned it the longest ago (or never)
+            const cycleCandidates = availableUsers.filter(u => userOwnershipAge.get(u.id) === maxAge);
+
+            // From these valid cycle candidates, balance the distribution using minCount
+            let minCount = Infinity;
+            for (const c of cycleCandidates) {
+                const count = assignedCounts.get(c.id) || 0;
+                if (count < minCount) minCount = count;
+            }
+
+            // Get all candidates who have the minimum count
+            const minCountCandidates = cycleCandidates.filter(c => (assignedCounts.get(c.id) || 0) === minCount);
+
+            // Sort candidates to maintain a round-robin cycle based on lastAssignedIndex
+            minCountCandidates.sort((a, b) => {
+                const indexA = activeUsers.findIndex(u => u.id === a.id);
+                const indexB = activeUsers.findIndex(u => u.id === b.id);
+
+                const distA = indexA > lastAssignedIndex ? indexA - lastAssignedIndex : indexA - lastAssignedIndex + activeUsers.length;
+                const distB = indexB > lastAssignedIndex ? indexB - lastAssignedIndex : indexB - lastAssignedIndex + activeUsers.length;
+
+                return distA - distB;
+            });
+
+            const targetUser = minCountCandidates[0];
+
+            // Track assignment for the even distribution
+            assignedCounts.set(targetUser.id, (assignedCounts.get(targetUser.id) || 0) + 1);
+            lastAssignedIndex = activeUsers.findIndex(u => u.id === targetUser.id);
+            // Also update timeline so it doesn't get assigned to them again if processed again (though we loop once)
+            timeline.unshift(targetUser.id);
 
             if (targetUser.id !== lead.assignedToId) {
                 await prisma.lead.update({
