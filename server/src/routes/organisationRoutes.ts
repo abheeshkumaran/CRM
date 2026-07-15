@@ -1,10 +1,11 @@
 import express from 'express';
-import { createOrganisation, getAllOrganisations, getOrganisation, updateOrganisation, sendTestReport } from '../controllers/organisationController';
+import { createOrganisation, getAllOrganisations, getOrganisation, updateOrganisation, sendTestReport, triggerShuffleNow } from '../controllers/organisationController';
 import { protect } from '../middleware/authMiddleware';
 
 const router = express.Router();
 
 router.post('/send-test-report', protect, sendTestReport);
+router.post('/shuffle-now', protect, triggerShuffleNow);
 router.get('/all', protect, getAllOrganisations);
 
 // Root routes

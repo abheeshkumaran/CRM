@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getOrgId } from '../utils/hierarchyUtils';
 import { encrypt } from '../utils/encryption';
 import { metaService } from '../services/metaService';
+import { forceShuffleOrg } from '../services/shufflerService';
 import bcrypt from 'bcryptjs';
 import { logAudit } from '../utils/auditLogger';
 import prisma from '../config/prisma';
@@ -693,6 +694,25 @@ export const permanentlyDeleteOrganisation = async (req: Request, res: Response)
         });
     } catch (error) {
         console.error('Permanent delete error:', error);
+        res.status(500).json({ message: (error as Error).message });
+    }
+};
+
+export const triggerShuffleNow = async (req: Request, res: Response) => {
+    try {
+        const user = (req as any).user;
+        const orgId = getOrgId(user);
+
+        if (!orgId) return res.status(404).json({ message: 'Organisation not found' });
+
+        const result = await forceShuffleOrg(orgId);
+
+        if (result.success) {
+            res.json({ message: result.message });
+        } else {
+            res.status(400).json({ message: result.message });
+        }
+    } catch (error) {
         res.status(500).json({ message: (error as Error).message });
     }
 };

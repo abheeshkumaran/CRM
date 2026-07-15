@@ -201,6 +201,11 @@ export const updateOrganisation = async (data: OrganisationUpdateData) => {
     return response.data;
 };
 
+export const triggerShuffleNow = async () => {
+    const response = await api.post('/organisation/shuffle-now');
+    return response.data;
+};
+
 export const getHierarchy = async () => {
     const response = await api.get('/hierarchy');
     return response.data;

@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, X } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useLeadStatuses } from "@/hooks/useLeadStatuses"
-import { getOrganisation, updateOrganisation } from "@/services/settingsService"
+import { getOrganisation, updateOrganisation, triggerShuffleNow } from "@/services/settingsService"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -60,6 +60,20 @@ export default function ShufflerSettingsPage() {
         shuffleTime: shuffleTime
       }
     })
+  }
+
+  const shuffleNowMutation = useMutation({
+    mutationFn: triggerShuffleNow,
+    onSuccess: (data) => {
+      toast.success(data.message || "Shuffle completed successfully")
+    },
+    onError: (error: any) => {
+      toast.error(error?.response?.data?.message || "Failed to execute shuffle")
+    }
+  })
+
+  const handleShuffleNow = () => {
+    shuffleNowMutation.mutate()
   }
 
   const filteredStatuses = statuses.filter(
@@ -185,13 +199,24 @@ export default function ShufflerSettingsPage() {
               </div>
             </div>
 
-            <Button
-              className="w-full sm:w-auto"
-              onClick={handleSave}
-              disabled={mutation.isPending}
-            >
-              {mutation.isPending ? "Saving..." : "Set Shuffler"}
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                className="w-full sm:w-auto"
+                onClick={handleSave}
+                disabled={mutation.isPending}
+              >
+                {mutation.isPending ? "Saving..." : "Set Shuffler"}
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full sm:w-auto"
+                type="button"
+                onClick={handleShuffleNow}
+                disabled={shuffleNowMutation.isPending}
+              >
+                {shuffleNowMutation.isPending ? "Shuffling..." : "Shuffle Now"}
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -16,15 +16,11 @@ async function test() {
         if (org.shufflerConfig) {
             const config: any = org.shufflerConfig;
             
-            // Auto fix incorrect IDs
-            if (config.statuses.includes("test lead")) {
-                config.statuses = ["test_lead"];
-                await prisma.organisation.update({
-                    where: { id: org.id },
-                    data: { shufflerConfig: config }
-                });
-                console.log("Fixed config statuses in DB!");
-            }
+            const users = await prisma.user.findMany({
+                where: { organisationId: org.id },
+                select: { id: true, firstName: true, role: true, isActive: true }
+            });
+            console.log(`Users in org:`, users);
             
             const daysBefore = parseInt(config.shuffleBeforeDays) || 0;
             const cutoffDate = new Date();
