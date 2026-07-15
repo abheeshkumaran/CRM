@@ -93,6 +93,12 @@ export interface LeadStatus {
     isDefault?: boolean;
 }
 
+export interface ShufflerConfig {
+    statuses: string[];
+    shuffleBeforeDays: number;
+    shuffleTime: string;
+}
+
 export interface OrganisationUpdateData {
     name?: string;
     logo?: string;
@@ -104,6 +110,7 @@ export interface OrganisationUpdateData {
     leadScoringConfig?: LeadScoringConfig;
     leadStatuses?: LeadStatus[];
     opportunityLeadStatuses?: LeadStatus[];
+    shufflerConfig?: ShufflerConfig;
 }
 
 export const getUsers = async () => {

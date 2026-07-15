@@ -20,7 +20,8 @@ import {
   Upload,
   Phone,
   CreditCard,
-  FileText
+  FileText,
+  Shuffle
 } from "lucide-react"
 
 const ALL_SETTINGS_SECTIONS = [
@@ -141,6 +142,14 @@ const ALL_SETTINGS_SECTIONS = [
     icon: Upload,
     gradient: "from-indigo-600 to-violet-600",
     roles: ['admin', 'branch_manager']
+  },
+  {
+    title: "Set Shuffler",
+    description: "Configure the lead shuffling settings",
+    href: "/settings/shuffler",
+    icon: Shuffle,
+    gradient: "from-indigo-600 to-violet-600",
+    roles: ['admin']
   },
   {
     title: "Call Recording",

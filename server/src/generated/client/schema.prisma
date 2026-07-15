@@ -20,6 +20,8 @@ model Organisation {
   contactPhone            String?
   address                 String?
   status                  String             @default("active")
+  dailyReportTime         String?            @default("09:00")
+  dailyReportEmailEnabled Boolean            @default(false)
   userLimit               Int                @default(5)
   contactLimit            Int                @default(500)
   storageLimit            Int                @default(1000) // MB
@@ -36,6 +38,7 @@ model Organisation {
   ssoConfig               Json?
   leadStatuses            Json?
   opportunityLeadStatuses Json?
+  shufflerConfig          Json?
   accounts                Account[]
   apiKeys                 ApiKey[]
   assignmentRules         AssignmentRule[]
@@ -77,13 +80,14 @@ model Organisation {
   productShares           ProductShare[]
   branches                Branch[]
   rolePermissions         Role[]
+  emiSchedules            EMISchedule[]
 }
 
 model User {
   id                          String                 @id @default(uuid())
   firstName                   String
   lastName                    String
-  email                       String                 @unique
+  email                       String
   userId                      String?                @unique
   password                    String
   role                        String                 @default("sales_rep")
@@ -172,6 +176,7 @@ model User {
   branch                      Branch?                @relation(fields: [branchId], references: [id])
   managedBranches             Branch[]               @relation("BranchManager")
 
+  @@unique([email, organisationId])
   @@index([organisationId])
   @@index([email])
   @@index([role])
@@ -235,7 +240,7 @@ model Lead {
   qualityScore       Int        @default(0)
   isHotLead          Boolean    @default(false)
   lastScoredAt       DateTime?
-  status             LeadStatus @default(new)
+  status             String     @default("new")
   stage              String?
   customFields       Json?
   activities         Json?
@@ -420,6 +425,7 @@ model Opportunity {
   type           OpportunityType @default(NEW_BUSINESS)
   branchId       String?
   branch         Branch?         @relation(fields: [branchId], references: [id])
+  emiSchedules   EMISchedule[]
 
   @@index([organisationId])
   @@index([stage])
@@ -1548,4 +1554,43 @@ model Role {
 
   @@unique([roleKey, organisationId])
   @@index([organisationId])
+}
+
+model EMISchedule {
+  id              String   @id @default(uuid())
+  totalAmount     Float
+  paidAmount      Float    @default(0)
+  remainingAmount Float
+  status          String   @default("active") // active, completed, defaulted
+  startDate       DateTime
+  endDate         DateTime
+  opportunityId   String
+  organisationId  String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  opportunity  Opportunity      @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  organisation Organisation     @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  installments EMIInstallment[]
+
+  @@index([opportunityId])
+  @@index([organisationId])
+}
+
+model EMIInstallment {
+  id                String    @id @default(uuid())
+  scheduleId        String
+  installmentNumber Int
+  amount            Float
+  dueDate           DateTime
+  status            String    @default("pending") // pending, paid, overdue, missed
+  paidAmount        Float     @default(0)
+  paidDate          DateTime?
+  notes             String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  schedule EMISchedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@index([scheduleId])
 }

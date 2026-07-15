@@ -35,11 +35,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Calendar,
-  Filter
+  Filter,
+  Shuffle,
+  Settings
 } from "lucide-react"
 import { BulkActionsToolbar } from "@/components/shared/BulkActionsToolbar"
 import { BulkAssignDialog } from "./BulkAssignDialog"
 import { BulkStatusDialog } from "./BulkStatusDialog"
+import { SetShufflerDialog } from "./SetShufflerDialog"
 import { DeleteConfirmationDialog } from "@/components/shared/DeleteConfirmationDialog"
 import { bulkLeadAction } from "@/services/leadService"
 import { isOrgAdmin as checkIsOrgAdmin } from "@/lib/utils"
@@ -354,6 +357,7 @@ export default function LeadsPage() {
   const [isBulkAssignDialogOpen, setIsBulkAssignDialogOpen] = useState(false);
   const [isBulkStatusDialogOpen, setIsBulkStatusDialogOpen] = useState(false);
   const [showBulkDeleteDialog, setShowBulkDeleteDialog] = useState(false);
+  const [isSetShufflerOpen, setIsSetShufflerOpen] = useState(false);
 
   const pageSize = parseInt(searchParams.get('pageSize') || '50', 10);
   const setPageSize = (val: number | ((prev: number) => number)) => {
@@ -848,6 +852,22 @@ export default function LeadsPage() {
 
             <div className="flex items-center gap-3 self-end sm:self-auto">
               {!isTaskView && !isChartView && !isAnalyticsView && (
+                <div className="flex items-center gap-2 mr-2">
+                  <Button variant="outline" className="h-11 px-4 border-dashed bg-background/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all font-semibold rounded-xl">
+                    <Shuffle className="h-4 w-4 mr-2 text-primary" />
+                    Shuffle
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="h-11 px-4 border-dashed bg-background/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-all font-semibold rounded-xl"
+                    onClick={() => setIsSetShufflerOpen(true)}
+                  >
+                    <Settings className="h-4 w-4 mr-2 text-primary" />
+                    Set Shuffler
+                  </Button>
+                </div>
+              )}
+              {!isTaskView && !isChartView && !isAnalyticsView && (
                 <Link to="/leads/new">
                   <Button className="h-11 px-6 bg-primary text-primary-foreground shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all font-semibold rounded-xl">
                     <Plus className="h-5 w-5 mr-2" />
@@ -1219,6 +1239,11 @@ export default function LeadsPage() {
           }}
         />
       )}
+
+      <SetShufflerDialog
+        open={isSetShufflerOpen}
+        onOpenChange={setIsSetShufflerOpen}
+      />
 
       <DeleteConfirmationDialog
         open={showBulkDeleteDialog}

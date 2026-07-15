@@ -30,6 +30,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User, LogOut } from "lucide-react"
 import { clearAndroidToken } from "@/utils/androidBridge"
 
+function DigitalClock() {
+  const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <div className="hidden sm:flex items-center justify-center px-3 h-9 bg-muted/50 rounded-md border border-border text-sm font-medium tabular-nums mr-2">
+      {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+    </div>
+  )
+}
+
 export function Header({ className }: { className?: string }) {
   const navigate = useNavigate()
   const { setTheme, resolvedTheme } = useTheme()
@@ -77,6 +92,7 @@ export function Header({ className }: { className?: string }) {
       </div>
 
       <div className="flex items-center gap-1 sm:gap-2">
+        <DigitalClock />
         <TooltipProvider>
           {/* Quick Add Lead - Only icon on mobile */}
           <QuickAddLeadDialog>

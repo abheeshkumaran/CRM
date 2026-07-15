@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { TrashService } from './trashService';
 import prisma from '../config/prisma';
+import { runShuffler } from './shufflerService';
 
 
 export const initCronJobs = () => {
@@ -9,9 +10,18 @@ export const initCronJobs = () => {
     // never competes with API traffic.
     cron.schedule('*/5 * * * *', async () => {
         try {
-            await prisma$executeRawUnsafe('SELECT 1');
+            await prisma.$executeRawUnsafe('SELECT 1');
         } catch (error) {
             console.error('[Cron] Database keep-alive ping failed:', error);
+        }
+    });
+
+    // Run shuffler checks every minute
+    cron.schedule('* * * * *', async () => {
+        try {
+            await runShuffler();
+        } catch (error) {
+            console.error('[Cron] Error running shuffler:', error);
         }
     });
 

@@ -150,7 +150,8 @@ exports.Prisma.OrganisationScalarFieldEnum = {
   upsellConfig: 'upsellConfig',
   ssoConfig: 'ssoConfig',
   leadStatuses: 'leadStatuses',
-  opportunityLeadStatuses: 'opportunityLeadStatuses'
+  opportunityLeadStatuses: 'opportunityLeadStatuses',
+  shufflerConfig: 'shufflerConfig'
 };
 
 exports.Prisma.UserScalarFieldEnum = {

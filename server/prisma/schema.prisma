@@ -38,6 +38,7 @@ model Organisation {
   ssoConfig               Json?
   leadStatuses            Json?
   opportunityLeadStatuses Json?
+  shufflerConfig          Json?
   accounts                Account[]
   apiKeys                 ApiKey[]
   assignmentRules         AssignmentRule[]
