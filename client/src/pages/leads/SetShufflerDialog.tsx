@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 import { useLeadStatuses } from "@/hooks/useLeadStatuses"
 
 interface SetShufflerDialogProps {
@@ -50,13 +51,11 @@ export function SetShufflerDialog({ open, onOpenChange }: SetShufflerDialogProps
         <div className="grid gap-4 py-4">
           <div className="flex items-center justify-between">
             <Label className="text-base font-semibold">Auto Shuffling</Label>
-            <Button
-              type="button"
-              onClick={() => setIsAutoShufflingOn(!isAutoShufflingOn)}
-              className={`${isAutoShufflingOn ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"} text-white`}
-            >
-              {isAutoShufflingOn ? "ON" : "OFF"}
-            </Button>
+            <Switch
+              checked={isAutoShufflingOn}
+              onCheckedChange={setIsAutoShufflingOn}
+              className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
+            />
           </div>
 
           <div className="space-y-2">

@@ -12,10 +12,12 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { Switch } from "@/components/ui/switch"
 import { ArrowLeft, X } from "lucide-react"
 import { Link } from "react-router-dom"
 import { useLeadStatuses } from "@/hooks/useLeadStatuses"
-import { getOrganisation, updateOrganisation, triggerShuffleNow } from "@/services/settingsService"
+import { getOrganisation, updateOrganisation, triggerShuffleNow, getBranches } from "@/services/settingsService"
+import { getUsers } from "@/services/userService"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -29,9 +31,24 @@ export default function ShufflerSettingsPage() {
   const [shuffleTime, setShuffleTime] = useState("")
   const [isAutoShufflingOn, setIsAutoShufflingOn] = useState(false)
 
+  const [branchDropdownVal, setBranchDropdownVal] = useState("")
+  const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>([])
+  const [userDropdownVal, setUserDropdownVal] = useState("")
+  const [selectedUserIds, setSelectedUserIds] = useState<string[]>([])
+
   const { data: org, isLoading } = useQuery({
     queryKey: ['organisation'],
     queryFn: getOrganisation
+  })
+
+  const { data: branches = [] } = useQuery({
+    queryKey: ['branches'],
+    queryFn: getBranches
+  })
+
+  const { data: users = [] } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsers
   })
 
   useEffect(() => {
@@ -40,6 +57,8 @@ export default function ShufflerSettingsPage() {
       setShuffleBefore(org.shufflerConfig.shuffleBeforeDays?.toString() || "")
       setShuffleTime(org.shufflerConfig.shuffleTime || "")
       setIsAutoShufflingOn(org.shufflerConfig.isAutoShufflingOn || false)
+      setSelectedBranchIds(org.shufflerConfig.branches || [])
+      setSelectedUserIds(org.shufflerConfig.users || [])
     }
   }, [org])
 
@@ -54,17 +73,6 @@ export default function ShufflerSettingsPage() {
     }
   })
 
-  const handleSave = () => {
-    mutation.mutate({
-      shufflerConfig: {
-        statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
-        shuffleBeforeDays: parseInt(shuffleBefore) || 0,
-        shuffleTime: shuffleTime,
-        isAutoShufflingOn: isAutoShufflingOn
-      }
-    })
-  }
-
   const shuffleNowMutation = useMutation({
     mutationFn: triggerShuffleNow,
     onSuccess: (data) => {
@@ -75,8 +83,38 @@ export default function ShufflerSettingsPage() {
     }
   })
 
+  const handleSave = () => {
+    mutation.mutate({
+      shufflerConfig: {
+        ...(org?.shufflerConfig || {}),
+        statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
+        shuffleBeforeDays: parseInt(shuffleBefore) || 0,
+        shuffleTime: shuffleTime,
+        isAutoShufflingOn: isAutoShufflingOn,
+        branches: selectedBranchIds,
+        users: selectedUserIds
+      }
+    })
+  }
+
   const handleShuffleNow = () => {
-    shuffleNowMutation.mutate()
+    // Save first, then trigger shuffle on success
+    mutation.mutate({
+      shufflerConfig: {
+        ...(org?.shufflerConfig || {}),
+        statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
+        shuffleBeforeDays: parseInt(shuffleBefore) || 0,
+        shuffleTime: shuffleTime,
+        isAutoShufflingOn: isAutoShufflingOn,
+        branches: selectedBranchIds,
+        users: selectedUserIds
+      }
+    }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['organisation'] });
+        shuffleNowMutation.mutate();
+      }
+    });
   }
 
   const filteredStatuses = statuses.filter(
@@ -105,7 +143,39 @@ export default function ShufflerSettingsPage() {
     });
   }
 
+  const handleBranchSelect = (val: string) => {
+    if (!val) return;
+    setSelectedBranchIds(prev => {
+      if (!prev.includes(val)) return [...prev, val];
+      return prev;
+    });
+    setTimeout(() => setBranchDropdownVal(""), 0);
+  }
+
+  const removeBranch = (branchId: string) => {
+    setSelectedBranchIds(prev => prev.filter(id => id !== branchId));
+  }
+
+  const handleUserSelect = (val: string) => {
+    if (!val) return;
+    setSelectedUserIds(prev => {
+      if (!prev.includes(val)) return [...prev, val];
+      return prev;
+    });
+    setTimeout(() => setUserDropdownVal(""), 0);
+  }
+
+  const removeUser = (userId: string) => {
+    setSelectedUserIds(prev => prev.filter(id => id !== userId));
+  }
+
   const selectedList = shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean);
+  const branchList = Array.isArray(branches) ? branches : (branches?.branches || []);
+  const userList = Array.isArray(users) ? users : (users?.users || []);
+
+  const filteredUsers = selectedBranchIds.length > 0 
+    ? userList.filter((u: any) => u.branch && selectedBranchIds.includes(u.branch.id) && !u.role?.name?.toLowerCase().includes('admin'))
+    : userList.filter((u: any) => !u.role?.name?.toLowerCase().includes('admin'));
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -132,47 +202,125 @@ export default function ShufflerSettingsPage() {
             This is the Set Shuffler. You can shuffle the leads and assign them to team members in a fair and balanced way. You can set rules to control how the leads are shuffled and assigned.
           </p>
 
-          <div className="grid gap-6 mt-8 max-w-2xl">
-            <div className="flex items-center justify-between border border-border p-4 rounded-lg">
-              <div>
-                <Label className="text-base font-semibold">Auto Shuffling</Label>
-                <p className="text-sm text-muted-foreground">Turn the automatic lead shuffler on or off</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 max-w-5xl">
+            {/* Left Column */}
+            <div className="space-y-6 flex flex-col">
+              <div className="flex items-center justify-between border border-border p-4 rounded-lg">
+                <div>
+                  <Label className="text-base font-semibold">Auto Shuffling</Label>
+                  <p className="text-sm text-muted-foreground">Turn the automatic lead shuffler on or off</p>
+                </div>
+                <Switch
+                  checked={isAutoShufflingOn}
+                  onCheckedChange={setIsAutoShufflingOn}
+                  className="data-[state=checked]:bg-green-500 data-[state=unchecked]:bg-red-500"
+                />
               </div>
-              <Button
-                type="button"
-                onClick={() => setIsAutoShufflingOn(!isAutoShufflingOn)}
-                className={`${isAutoShufflingOn ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600"} text-white min-w-[80px]`}
-              >
-                {isAutoShufflingOn ? "ON" : "OFF"}
-              </Button>
+
+              <div className="space-y-2">
+                <Label htmlFor="lead-status">Lead Status</Label>
+                <Select value={selectedStatus} onValueChange={handleStatusSelect}>
+                  <SelectTrigger id="lead-status">
+                    <SelectValue placeholder="Select lead status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filteredStatuses.map((status) => (
+                      <SelectItem key={status.id} value={status.id}>
+                        {status.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="branch-select">Branches</Label>
+                <Select value={branchDropdownVal} onValueChange={handleBranchSelect}>
+                  <SelectTrigger id="branch-select">
+                    <SelectValue placeholder="Select branch" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {branchList.map((b: any) => (
+                      <SelectItem key={b.id} value={b.id}>
+                        {b.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="user-select">Users</Label>
+                <Select value={userDropdownVal} onValueChange={handleUserSelect}>
+                  <SelectTrigger id="user-select">
+                    <SelectValue placeholder="Select user" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filteredUsers.map((u: any) => (
+                      <SelectItem key={u.id} value={u.id}>
+                        {u.firstName} {u.lastName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-6 mt-auto pt-2">
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="shuffle-before">Shuffle Before (Days)</Label>
+                  <Input
+                    id="shuffle-before"
+                    type="number"
+                    min="0"
+                    value={shuffleBefore}
+                    onChange={(e) => setShuffleBefore(e.target.value)}
+                    placeholder="e.g. 5"
+                  />
+                </div>
+
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="shuffle-time">Time</Label>
+                  <Input
+                    id="shuffle-time"
+                    type="time"
+                    value={shuffleTime}
+                    onChange={(e) => setShuffleTime(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button
+                  className="w-full sm:w-auto"
+                  onClick={handleSave}
+                  disabled={mutation.isPending}
+                >
+                  {mutation.isPending ? "Saving..." : "Set Shuffler"}
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="w-full sm:w-auto"
+                  type="button"
+                  onClick={handleShuffleNow}
+                  disabled={shuffleNowMutation.isPending}
+                >
+                  {shuffleNowMutation.isPending ? "Shuffling..." : "Shuffle Now"}
+                </Button>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="lead-status">Lead Status</Label>
-              <Select value={selectedStatus} onValueChange={handleStatusSelect}>
-                <SelectTrigger id="lead-status">
-                  <SelectValue placeholder="Select lead status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {filteredStatuses.map((status) => (
-                    <SelectItem key={status.id} value={status.id}>
-                      {status.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Shuffling Leads</Label>
-              <div className="min-h-[100px] w-full rounded-md border border-input bg-transparent px-3 py-3 text-sm shadow-sm">
-                {selectedList.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
-                    {selectedList.map((statusId, index) => {
+            {/* Right Column */}
+            <div className="space-y-6">
+              <div className="space-y-2 flex flex-col">
+                <Label>Shuffling Leads (Selected)</Label>
+                <div className="w-full rounded-md border border-input bg-transparent px-3 py-3 text-sm shadow-sm flex flex-wrap gap-2 content-start min-h-[100px]">
+                  {selectedList.length > 0 ? (
+                    selectedList.map((statusId, index) => {
                       const statusObj = statuses.find(s => s.id === statusId);
                       const label = statusObj ? statusObj.label : statusId;
                       return (
-                        <Badge key={index} variant="secondary" className="flex items-center gap-1 text-sm py-1">
+                        <Badge key={index} variant="secondary" className="flex items-center gap-1 text-sm py-1 h-fit">
                           {label}
                           <button
                             type="button"
@@ -183,56 +331,64 @@ export default function ShufflerSettingsPage() {
                           </button>
                         </Badge>
                       )
-                    })}
-                  </div>
-                ) : (
-                  <span className="text-muted-foreground">No lead statuses selected...</span>
-                )}
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-6">
-              <div className="space-y-2 flex-1">
-                <Label htmlFor="shuffle-before">Shuffle Before (Days)</Label>
-                <Input
-                  id="shuffle-before"
-                  type="number"
-                  min="0"
-                  value={shuffleBefore}
-                  onChange={(e) => setShuffleBefore(e.target.value)}
-                  placeholder="e.g. 5"
-                />
+                    })
+                  ) : (
+                    <span className="text-muted-foreground w-full text-center mt-4">No lead statuses selected...</span>
+                  )}
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="shuffle-time">Time</Label>
-                <Input
-                  id="shuffle-time"
-                  type="time"
-                  value={shuffleTime}
-                  onChange={(e) => setShuffleTime(e.target.value)}
-                  className="w-full sm:w-32"
-                />
+              <div className="space-y-2 flex flex-col">
+                <Label>Branches (Selected)</Label>
+                <div className="w-full rounded-md border border-input bg-transparent px-3 py-3 text-sm shadow-sm flex flex-wrap gap-2 content-start min-h-[100px]">
+                  {selectedBranchIds.length > 0 ? (
+                    selectedBranchIds.map((branchId, index) => {
+                      const branchObj = branchList.find((b: any) => b.id === branchId);
+                      const label = branchObj ? branchObj.name : branchId;
+                      return (
+                        <Badge key={index} variant="secondary" className="flex items-center gap-1 text-sm py-1 h-fit">
+                          {label}
+                          <button
+                            type="button"
+                            onClick={() => removeBranch(branchId)}
+                            className="text-muted-foreground hover:text-foreground focus:outline-none ml-1"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      )
+                    })
+                  ) : (
+                    <span className="text-muted-foreground w-full text-center mt-4">No branches selected...</span>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                className="w-full sm:w-auto"
-                onClick={handleSave}
-                disabled={mutation.isPending}
-              >
-                {mutation.isPending ? "Saving..." : "Set Shuffler"}
-              </Button>
-              <Button
-                variant="secondary"
-                className="w-full sm:w-auto"
-                type="button"
-                onClick={handleShuffleNow}
-                disabled={shuffleNowMutation.isPending}
-              >
-                {shuffleNowMutation.isPending ? "Shuffling..." : "Shuffle Now"}
-              </Button>
+              <div className="space-y-2 flex flex-col">
+                <Label>Users (Selected)</Label>
+                <div className="w-full rounded-md border border-input bg-transparent px-3 py-3 text-sm shadow-sm flex flex-wrap gap-2 content-start min-h-[100px]">
+                  {selectedUserIds.length > 0 ? (
+                    selectedUserIds.map((userId, index) => {
+                      const userObj = userList.find((u: any) => u.id === userId);
+                      const label = userObj ? `${userObj.firstName} ${userObj.lastName}` : userId;
+                      return (
+                        <Badge key={index} variant="secondary" className="flex items-center gap-1 text-sm py-1 h-fit">
+                          {label}
+                          <button
+                            type="button"
+                            onClick={() => removeUser(userId)}
+                            className="text-muted-foreground hover:text-foreground focus:outline-none ml-1"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      )
+                    })
+                  ) : (
+                    <span className="text-muted-foreground w-full text-center mt-4">No users selected...</span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </CardContent>

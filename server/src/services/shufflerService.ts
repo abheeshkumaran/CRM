@@ -34,12 +34,14 @@ export const runShuffler = async () => {
             cutoffDate.setDate(cutoffDate.getDate() - daysBefore);
 
             // Find eligible leads
+            // Only shuffle leads that are currently owned by the selected users
             const eligibleLeads = await prisma.lead.findMany({
                 where: {
                     organisationId: org.id,
                     isDeleted: false,
                     status: { in: config.statuses },
-                    updatedAt: { lt: cutoffDate }
+                    updatedAt: { lt: cutoffDate },
+                    assignedToId: { in: config.users || [] }
                 },
                 select: { id: true, assignedToId: true },
                 orderBy: { id: 'asc' }
@@ -71,12 +73,20 @@ export const runShuffler = async () => {
             });
             const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager', ...adminRoles.map(r => r.roleKey)];
 
+            // If specific users are configured, ONLY shuffle leads to those users.
+            // If the user array is empty, we don't shuffle to anyone.
+            if (!config.users || config.users.length === 0) {
+                console.log(`[ShufflerService] No users selected for shuffling in Org: ${org.name}`);
+                continue;
+            }
+
             // Find eligible active users in the org
             const activeUsers = await prisma.user.findMany({
                 where: {
                     organisationId: org.id,
                     isActive: true,
                     isOffDuty: false,
+                    id: { in: config.users },
                     NOT: {
                         OR: [
                             {
@@ -234,11 +244,13 @@ export const forceShuffleOrg = async (organisationId: string) => {
         const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager', ...adminRoles.map(r => r.roleKey)];
 
         // Find eligible leads (bypass date checks, bypass time checks)
+        // Only shuffle leads that are currently owned by the selected users
         const eligibleLeads = await prisma.lead.findMany({
             where: {
                 organisationId: org.id,
                 isDeleted: false,
-                status: { in: config.statuses }
+                status: { in: config.statuses },
+                assignedToId: { in: config.users || [] }
             },
             select: { id: true, assignedToId: true },
             orderBy: { id: 'asc' }
@@ -248,12 +260,17 @@ export const forceShuffleOrg = async (organisationId: string) => {
             return { success: true, message: 'No eligible leads found for selected statuses.' };
         }
 
+        if (!config.users || config.users.length === 0) {
+            return { success: false, message: 'No users selected for shuffling. Please select users first.' };
+        }
+
         // Find eligible active users in the org
         const activeUsers = await prisma.user.findMany({
             where: {
                 organisationId: org.id,
                 isActive: true,
                 isOffDuty: false,
+                id: { in: config.users },
                 NOT: {
                     OR: [
                         {
