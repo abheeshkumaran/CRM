@@ -39,6 +39,7 @@ export default function ShufflerSettingsPage() {
       setShufflingLeads(org.shufflerConfig.statuses?.join('\n') || "")
       setShuffleBefore(org.shufflerConfig.shuffleBeforeDays?.toString() || "")
       setShuffleTime(org.shufflerConfig.shuffleTime || "")
+      setIsAutoShufflingOn(org.shufflerConfig.isAutoShufflingOn || false)
     }
   }, [org])
 
@@ -58,7 +59,8 @@ export default function ShufflerSettingsPage() {
       shufflerConfig: {
         statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
         shuffleBeforeDays: parseInt(shuffleBefore) || 0,
-        shuffleTime: shuffleTime
+        shuffleTime: shuffleTime,
+        isAutoShufflingOn: isAutoShufflingOn
       }
     })
   }

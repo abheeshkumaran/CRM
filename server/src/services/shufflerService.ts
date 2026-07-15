@@ -21,6 +21,7 @@ export const runShuffler = async () => {
             if (!org.shufflerConfig) continue;
 
             const config = org.shufflerConfig as any;
+            if (!config.isAutoShufflingOn) continue;
             if (!config.statuses || config.statuses.length === 0) continue;
 
             // Check if it's the right time to shuffle for this org
@@ -204,6 +205,9 @@ export const forceShuffleOrg = async (organisationId: string) => {
         }
 
         const config = org.shufflerConfig as any;
+        if (!config.isAutoShufflingOn) {
+            return { success: false, message: 'Auto shuffling is turned OFF. Please turn it ON to shuffle leads.' };
+        }
         if (!config.statuses || config.statuses.length === 0) {
             return { success: false, message: 'No lead statuses configured for shuffling.' };
         }

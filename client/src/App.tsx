@@ -282,14 +282,12 @@ function AppContent() {
               <Route path="/marketing/campaigns/new" element={<CreateCampaignPage />} />
               <Route path="/marketing/lists" element={<EmailListsPage />} />
               <Route path="/marketing/whatsapp" element={<WhatsAppCampaignsPage />} />
-              <Route path="/communications" element={<CommunicationsPage />} />
               <Route path="/whatsapp/inbox" element={<WhatsAppInbox />} />
               <Route path="/calendar" element={<CalendarPage />} />
               <Route path="/follow-ups" element={<FollowUpsPage />} />
               <Route path="/calls" element={<CallsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/ai-writer" element={<AiWriterPage />} />
-              <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/users/:id" element={<UserProfilePage />} />
               <Route path="/organisation/hierarchy" element={<HierarchyPage />} />
               <Route path="/settings/profile" element={<ProfileSettingsPage />} />
@@ -318,7 +316,6 @@ function AppContent() {
               <Route path="/support" element={<SupportPage />} />
               <Route path="/training" element={<TrainingPage />} />
               <Route path="/trash" element={<TrashPage />} />
-              <Route path="/goals" element={<GoalsPage />} />
               <Route path="/sales-targets" element={<SalesTargetsPage />} />
               <Route path="/sales/commissions" element={<CommissionsPage />} />
               <Route path="/reports" element={<ReportsPage />} />

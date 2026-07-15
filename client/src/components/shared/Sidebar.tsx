@@ -49,7 +49,6 @@ const menuGroups = [
     title: "Overview",
     items: [
       { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-      { title: "Analytics", href: "/analytics", icon: PieChart, role: "manager" },
     ]
   },
   {
@@ -87,13 +86,11 @@ const menuGroups = [
     title: "Connect",
     items: [
       { title: "Call Logs", href: "/calls", icon: PhoneCall },
-      { title: "Communications", href: "/communications", icon: Phone, role: "manager" },
     ]
   },
   {
     title: "Productivity",
     items: [
-      { title: "Goals", href: "/goals", icon: Target, role: "manager" },
       { title: "Follow-ups", href: "/follow-ups", icon: Calendar },
       { title: "Calendar", href: "/calendar", icon: Calendar },
       { title: "Reports", href: "/reports", icon: FileText },
