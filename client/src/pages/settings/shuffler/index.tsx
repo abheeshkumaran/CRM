@@ -29,6 +29,8 @@ export default function ShufflerSettingsPage() {
   const [shufflingLeads, setShufflingLeads] = useState("")
   const [shuffleBefore, setShuffleBefore] = useState("")
   const [shuffleTime, setShuffleTime] = useState("")
+  const [shuffleFromDate, setShuffleFromDate] = useState("")
+  const [shuffleToDate, setShuffleToDate] = useState("")
   const [isAutoShufflingOn, setIsAutoShufflingOn] = useState(false)
 
   const [branchDropdownVal, setBranchDropdownVal] = useState("")
@@ -56,6 +58,8 @@ export default function ShufflerSettingsPage() {
       setShufflingLeads(org.shufflerConfig.statuses?.join('\n') || "")
       setShuffleBefore(org.shufflerConfig.shuffleBeforeDays?.toString() || "")
       setShuffleTime(org.shufflerConfig.shuffleTime || "")
+      setShuffleFromDate(org.shufflerConfig.shuffleFromDate || "")
+      setShuffleToDate(org.shufflerConfig.shuffleToDate || "")
       setIsAutoShufflingOn(org.shufflerConfig.isAutoShufflingOn || false)
       setSelectedBranchIds(org.shufflerConfig.branches || [])
       setSelectedUserIds(org.shufflerConfig.users || [])
@@ -90,6 +94,8 @@ export default function ShufflerSettingsPage() {
         statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
         shuffleBeforeDays: parseInt(shuffleBefore) || 0,
         shuffleTime: shuffleTime,
+        shuffleFromDate: shuffleFromDate,
+        shuffleToDate: shuffleToDate,
         isAutoShufflingOn: isAutoShufflingOn,
         branches: selectedBranchIds,
         users: selectedUserIds
@@ -105,6 +111,8 @@ export default function ShufflerSettingsPage() {
         statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
         shuffleBeforeDays: parseInt(shuffleBefore) || 0,
         shuffleTime: shuffleTime,
+        shuffleFromDate: shuffleFromDate,
+        shuffleToDate: shuffleToDate,
         isAutoShufflingOn: isAutoShufflingOn,
         branches: selectedBranchIds,
         users: selectedUserIds
@@ -145,6 +153,14 @@ export default function ShufflerSettingsPage() {
 
   const handleBranchSelect = (val: string) => {
     if (!val) return;
+
+    if (val === "select-all") {
+      const allBranchIds = branchList.map((b: any) => b.id);
+      setSelectedBranchIds(allBranchIds);
+      setTimeout(() => setBranchDropdownVal(""), 0);
+      return;
+    }
+
     setSelectedBranchIds(prev => {
       if (!prev.includes(val)) return [...prev, val];
       return prev;
@@ -165,6 +181,14 @@ export default function ShufflerSettingsPage() {
 
   const handleUserSelect = (val: string) => {
     if (!val) return;
+
+    if (val === "select-all") {
+      const allUserIds = filteredUsers.map((u: any) => u.id);
+      setSelectedUserIds(allUserIds);
+      setTimeout(() => setUserDropdownVal(""), 0);
+      return;
+    }
+
     setSelectedUserIds(prev => {
       if (!prev.includes(val)) return [...prev, val];
       return prev;
@@ -180,7 +204,7 @@ export default function ShufflerSettingsPage() {
   const branchList = Array.isArray(branches) ? branches : (branches?.branches || []);
   const userList = Array.isArray(users) ? users : (users?.users || []);
 
-  const filteredUsers = selectedBranchIds.length > 0 
+  const filteredUsers = selectedBranchIds.length > 0
     ? userList.filter((u: any) => u.branch && selectedBranchIds.includes(u.branch.id) && !u.role?.name?.toLowerCase().includes('admin'))
     : []; // Empty array when no branch is selected
 
@@ -247,6 +271,7 @@ export default function ShufflerSettingsPage() {
                     <SelectValue placeholder="Select branch" />
                   </SelectTrigger>
                   <SelectContent>
+                    {branchList.length > 0 && <SelectItem value="select-all" className="font-semibold text-primary">Select All</SelectItem>}
                     {branchList.map((b: any) => (
                       <SelectItem key={b.id} value={b.id}>
                         {b.name}
@@ -263,6 +288,7 @@ export default function ShufflerSettingsPage() {
                     <SelectValue placeholder="Select user" />
                   </SelectTrigger>
                   <SelectContent>
+                    {filteredUsers.length > 0 && <SelectItem value="select-all" className="font-semibold text-primary">Select All</SelectItem>}
                     {filteredUsers.map((u: any) => (
                       <SelectItem key={u.id} value={u.id}>
                         {u.firstName} {u.lastName}
@@ -272,9 +298,30 @@ export default function ShufflerSettingsPage() {
                 </Select>
               </div>
 
+              <div className="flex flex-col sm:flex-row gap-6 mt-4">
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="shuffle-from-date">Shuffle From</Label>
+                  <Input
+                    id="shuffle-from-date"
+                    type="date"
+                    value={shuffleFromDate}
+                    onChange={(e) => setShuffleFromDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="shuffle-to-date">Shuffle To</Label>
+                  <Input
+                    id="shuffle-to-date"
+                    type="date"
+                    value={shuffleToDate}
+                    onChange={(e) => setShuffleToDate(e.target.value)}
+                  />
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-6 mt-auto pt-2">
                 <div className="space-y-2 flex-1">
-                  <Label htmlFor="shuffle-before">Shuffle Before (Days)</Label>
+                  <Label htmlFor="shuffle-before">Auto shuffle count (days)</Label>
                   <Input
                     id="shuffle-before"
                     type="number"
@@ -298,6 +345,13 @@ export default function ShufflerSettingsPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button
+                  className="w-full sm:w-auto"
+                  variant="outline"
+                  type="button"
+                >
+                  Change Period
+                </Button>
                 <Button
                   className="w-full sm:w-auto"
                   onClick={handleSave}
@@ -393,6 +447,21 @@ export default function ShufflerSettingsPage() {
                     })
                   ) : (
                     <span className="text-muted-foreground w-full text-center mt-4">No users selected...</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2 flex flex-col">
+                <Label>Date Range (Selected)</Label>
+                <div className="w-full rounded-md border border-input bg-transparent px-3 py-3 text-sm shadow-sm flex flex-wrap gap-2 content-start min-h-[50px]">
+                  {shuffleFromDate || shuffleToDate ? (
+                    <span className="text-foreground text-sm font-medium">
+                      {shuffleFromDate ? new Date(shuffleFromDate).toLocaleDateString() : 'from the begining'} 
+                      {' - '} 
+                      {shuffleToDate ? new Date(shuffleToDate).toLocaleDateString() : 'last day'}
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground w-full text-center mt-2">No date range selected...</span>
                   )}
                 </div>
               </div>
