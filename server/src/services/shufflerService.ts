@@ -52,57 +52,13 @@ export const runShuffler = async () => {
                 continue;
             }
 
-            // Fetch admin roles from Role table for this org
-            const adminRoles = await prisma.role.findMany({
-                where: {
-                    AND: [
-                        {
-                            OR: [
-                                { name: { in: ['admin', 'org_admin', 'organization admin', 'super admin', 'manager'], mode: 'insensitive' } },
-                                { roleKey: { in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager'] } }
-                            ]
-                        },
-                        {
-                            OR: [
-                                { organisationId: org.id },
-                                { isSystemRole: true }
-                            ]
-                        }
-                    ]
-                }
-            });
-            const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager', ...adminRoles.map(r => r.roleKey)];
-
-            // If specific users are configured, ONLY shuffle leads to those users.
-            // If the user array is empty, we don't shuffle to anyone.
-            if (!config.users || config.users.length === 0) {
-                console.log(`[ShufflerService] No users selected for shuffling in Org: ${org.name}`);
-                continue;
-            }
-
             // Find eligible active users in the org
             const activeUsers = await prisma.user.findMany({
                 where: {
                     organisationId: org.id,
                     isActive: true,
                     isOffDuty: false,
-                    id: { in: config.users },
-                    NOT: {
-                        OR: [
-                            {
-                                role: {
-                                    in: excludedRoleKeys,
-                                    mode: 'insensitive'
-                                }
-                            },
-                            {
-                                position: {
-                                    in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'super admin', 'manager'],
-                                    mode: 'insensitive'
-                                }
-                            }
-                        ]
-                    }
+                    id: { in: config.users }
                 },
                 select: { id: true },
                 orderBy: { id: 'asc' }
@@ -222,26 +178,9 @@ export const forceShuffleOrg = async (organisationId: string) => {
             return { success: false, message: 'No lead statuses configured for shuffling.' };
         }
 
-        // Fetch admin roles from Role table for this org
-        const adminRoles = await prisma.role.findMany({
-            where: {
-                AND: [
-                    {
-                        OR: [
-                            { name: { in: ['admin', 'org_admin', 'organization admin', 'super admin', 'manager'], mode: 'insensitive' } },
-                            { roleKey: { in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager'] } }
-                        ]
-                    },
-                    {
-                        OR: [
-                            { organisationId: org.id },
-                            { isSystemRole: true }
-                        ]
-                    }
-                ]
-            }
-        });
-        const excludedRoleKeys = ['admin', 'org_admin', 'organization admin', 'super_admin', 'manager', ...adminRoles.map(r => r.roleKey)];
+        if (!config.users || config.users.length === 0) {
+            return { success: false, message: 'No users selected for shuffling. Please select users first.' };
+        }
 
         // Find eligible leads (bypass date checks, bypass time checks)
         // Only shuffle leads that are currently owned by the selected users
@@ -260,33 +199,13 @@ export const forceShuffleOrg = async (organisationId: string) => {
             return { success: true, message: 'No eligible leads found for selected statuses.' };
         }
 
-        if (!config.users || config.users.length === 0) {
-            return { success: false, message: 'No users selected for shuffling. Please select users first.' };
-        }
-
         // Find eligible active users in the org
         const activeUsers = await prisma.user.findMany({
             where: {
                 organisationId: org.id,
                 isActive: true,
                 isOffDuty: false,
-                id: { in: config.users },
-                NOT: {
-                    OR: [
-                        {
-                            role: {
-                                in: excludedRoleKeys,
-                                mode: 'insensitive'
-                            }
-                        },
-                        {
-                            position: {
-                                in: ['admin', 'org_admin', 'organization admin', 'super_admin', 'super admin', 'manager'],
-                                mode: 'insensitive'
-                            }
-                        }
-                    ]
-                }
+                id: { in: config.users }
             },
             select: { id: true },
             orderBy: { id: 'asc' }

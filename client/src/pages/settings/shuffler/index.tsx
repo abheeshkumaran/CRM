@@ -154,6 +154,13 @@ export default function ShufflerSettingsPage() {
 
   const removeBranch = (branchId: string) => {
     setSelectedBranchIds(prev => prev.filter(id => id !== branchId));
+
+    // Also remove any users from Users (Selected) who belong to this removed branch
+    const currentUserList = Array.isArray(users) ? users : (users?.users || []);
+    setSelectedUserIds(prev => prev.filter(userId => {
+      const userObj = currentUserList.find((u: any) => u.id === userId);
+      return userObj?.branch?.id !== branchId;
+    }));
   }
 
   const handleUserSelect = (val: string) => {
@@ -175,7 +182,7 @@ export default function ShufflerSettingsPage() {
 
   const filteredUsers = selectedBranchIds.length > 0 
     ? userList.filter((u: any) => u.branch && selectedBranchIds.includes(u.branch.id) && !u.role?.name?.toLowerCase().includes('admin'))
-    : userList.filter((u: any) => !u.role?.name?.toLowerCase().includes('admin'));
+    : []; // Empty array when no branch is selected
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
