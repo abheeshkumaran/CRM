@@ -244,6 +244,7 @@ exports.Prisma.LeadScalarFieldEnum = {
   updatedAt: 'updatedAt',
   organisationId: 'organisationId',
   assignedToId: 'assignedToId',
+  lastAssignedAt: 'lastAssignedAt',
   teamId: 'teamId',
   managerExplanation: 'managerExplanation',
   previousOwnerId: 'previousOwnerId',

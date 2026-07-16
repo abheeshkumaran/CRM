@@ -250,6 +250,7 @@ model Lead {
   updatedAt          DateTime   @updatedAt
   organisationId     String
   assignedToId       String?
+  lastAssignedAt     DateTime?  @default(now())
   teamId             String?
   managerExplanation String?
   previousOwnerId    String?

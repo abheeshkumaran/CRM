@@ -40,7 +40,7 @@ export const runShuffler = async () => {
                     organisationId: org.id,
                     isDeleted: false,
                     status: { in: config.statuses },
-                    updatedAt: { lt: cutoffDate },
+                    lastAssignedAt: { lt: cutoffDate },
                     assignedToId: { in: config.users || [] }
                 },
                 select: { id: true, assignedToId: true },
