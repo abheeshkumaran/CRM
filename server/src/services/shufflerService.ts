@@ -44,11 +44,23 @@ export const runShuffler = async () => {
                 continue;
             }
 
-            // Cutoff is based on REST PERIOD now, not the global interval
-            const cutoffDate = new Date();
-            cutoffDate.setHours(0, 0, 0, 0);
-            cutoffDate.setDate(cutoffDate.getDate() - restPeriodDays);
-            console.log(`[ShufflerService] Rest Period: ${restPeriodDays} days. Cutoff Date: ${cutoffDate}`);
+            const hasDateRange = config.shuffleFromDate && config.shuffleToDate;
+            let dateFilter: any = {};
+
+            if (hasDateRange) {
+                const fromDate = new Date(config.shuffleFromDate);
+                fromDate.setHours(0, 0, 0, 0);
+                const toDate = new Date(config.shuffleToDate);
+                toDate.setHours(23, 59, 59, 999);
+                dateFilter = { gte: fromDate, lte: toDate };
+                console.log(`[ShufflerService] Using Date Range: ${fromDate} to ${toDate}`);
+            } else {
+                const cutoffDate = new Date();
+                cutoffDate.setHours(0, 0, 0, 0);
+                cutoffDate.setDate(cutoffDate.getDate() - restPeriodDays);
+                dateFilter = { lt: cutoffDate };
+                console.log(`[ShufflerService] Rest Period: ${restPeriodDays} days. Cutoff Date: ${cutoffDate}`);
+            }
 
             // Find eligible leads
             // Only shuffle leads that are currently owned by the selected users
@@ -57,7 +69,7 @@ export const runShuffler = async () => {
                     organisationId: org.id,
                     isDeleted: false,
                     status: { in: config.statuses },
-                    createdAt: { lt: cutoffDate },
+                    createdAt: dateFilter,
                     assignedToId: { in: config.users || [] }
                 },
                 select: { id: true, assignedToId: true },
@@ -163,7 +175,9 @@ export const runShuffler = async () => {
             const updatedConfig = {
                 ...(org.shufflerConfig as Record<string, any>),
                 lastAssignedUserId: activeUsers[lastAssignedIndex]?.id,
-                lastGlobalShuffleDate: new Date().toISOString()
+                lastGlobalShuffleDate: new Date().toISOString(),
+                shuffleFromDate: null,
+                shuffleToDate: null
             };
 
             await prisma.organisation.update({
@@ -202,19 +216,31 @@ export const forceShuffleOrg = async (organisationId: string) => {
             return { success: false, message: 'No users selected for shuffling. Please select users first.' };
         }
 
-        const restPeriodDays = parseInt(config.restPeriodDays) || 0;
-        const cutoffDate = new Date();
-        cutoffDate.setHours(0, 0, 0, 0);
-        cutoffDate.setDate(cutoffDate.getDate() - restPeriodDays);
+        const hasDateRange = config.shuffleFromDate && config.shuffleToDate;
+        let dateFilter: any = {};
 
-        // Find eligible leads (bypass global interval date checks, bypass time checks, BUT RESPECT REST PERIOD)
-        // Only shuffle leads that are currently owned by the selected users and older than the rest period cutoff
+        if (hasDateRange) {
+            const fromDate = new Date(config.shuffleFromDate);
+            fromDate.setHours(0, 0, 0, 0);
+            const toDate = new Date(config.shuffleToDate);
+            toDate.setHours(23, 59, 59, 999);
+            dateFilter = { gte: fromDate, lte: toDate };
+        } else {
+            const restPeriodDays = parseInt(config.restPeriodDays) || 0;
+            const cutoffDate = new Date();
+            cutoffDate.setHours(0, 0, 0, 0);
+            cutoffDate.setDate(cutoffDate.getDate() - restPeriodDays);
+            dateFilter = { lt: cutoffDate };
+        }
+
+        // Find eligible leads (bypass global interval date checks, bypass time checks, BUT RESPECT REST PERIOD OR DATE RANGE)
+        // Only shuffle leads that are currently owned by the selected users and older than the rest period cutoff or in the date range
         const eligibleLeads = await prisma.lead.findMany({
             where: {
                 organisationId: org.id,
                 isDeleted: false,
                 status: { in: config.statuses },
-                createdAt: { lt: cutoffDate },
+                createdAt: dateFilter,
                 assignedToId: { in: config.users || [] }
             },
             select: { id: true, assignedToId: true },
@@ -312,14 +338,18 @@ export const forceShuffleOrg = async (organisationId: string) => {
         lastAssignedIndex = nextIndex;
 
         console.log(`[ShufflerService] Force successfully reassigned ${reassignedCount} leads in Org: ${org.name}`);
-        // Save the persistent round-robin pointer
+        const updatedConfig = {
+            ...(org.shufflerConfig as Record<string, any>),
+            shuffleFromDate: null,
+            shuffleToDate: null
+        };
         if (lastAssignedIndex !== -1 && activeUsers[lastAssignedIndex]) {
-            const updatedConfig = { ...(org.shufflerConfig as Record<string, any>), lastAssignedUserId: activeUsers[lastAssignedIndex].id };
-            await prisma.organisation.update({
-                where: { id: org.id },
-                data: { shufflerConfig: updatedConfig }
-            });
+            updatedConfig.lastAssignedUserId = activeUsers[lastAssignedIndex].id;
         }
+        await prisma.organisation.update({
+            where: { id: org.id },
+            data: { shufflerConfig: updatedConfig }
+        });
 
         return { success: true, message: `Shuffled ${reassignedCount} leads successfully.` };
     } catch (error) {
@@ -331,3 +361,5 @@ export const forceShuffleOrg = async (organisationId: string) => {
 // touch
 // touch2
 // restart
+// auto-clear
+// date-range-logic
