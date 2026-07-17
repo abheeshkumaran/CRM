@@ -28,10 +28,12 @@ export default function ShufflerSettingsPage() {
   const [selectedStatus, setSelectedStatus] = useState("")
   const [shufflingLeads, setShufflingLeads] = useState("")
   const [shuffleBefore, setShuffleBefore] = useState("")
+  const [restPeriod, setRestPeriod] = useState("0")
   const [shuffleTime, setShuffleTime] = useState("")
   const [shuffleFromDate, setShuffleFromDate] = useState("")
   const [shuffleToDate, setShuffleToDate] = useState("")
   const [isAutoShufflingOn, setIsAutoShufflingOn] = useState(false)
+  const [isCustomPeriod, setIsCustomPeriod] = useState(false)
 
   const [branchDropdownVal, setBranchDropdownVal] = useState("")
   const [selectedBranchIds, setSelectedBranchIds] = useState<string[]>([])
@@ -57,6 +59,7 @@ export default function ShufflerSettingsPage() {
     if (org?.shufflerConfig) {
       setShufflingLeads(org.shufflerConfig.statuses?.join('\n') || "")
       setShuffleBefore(org.shufflerConfig.shuffleBeforeDays?.toString() || "")
+      setRestPeriod(org.shufflerConfig.restPeriodDays?.toString() || "0")
       setShuffleTime(org.shufflerConfig.shuffleTime || "")
       setShuffleFromDate(org.shufflerConfig.shuffleFromDate || "")
       setShuffleToDate(org.shufflerConfig.shuffleToDate || "")
@@ -91,8 +94,10 @@ export default function ShufflerSettingsPage() {
     mutation.mutate({
       shufflerConfig: {
         ...(org?.shufflerConfig || {}),
+        lastGlobalShuffleDate: org?.shufflerConfig?.lastGlobalShuffleDate || new Date().toISOString(),
         statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
         shuffleBeforeDays: parseInt(shuffleBefore) || 0,
+        restPeriodDays: parseInt(restPeriod) || 0,
         shuffleTime: shuffleTime,
         shuffleFromDate: shuffleFromDate,
         shuffleToDate: shuffleToDate,
@@ -108,8 +113,10 @@ export default function ShufflerSettingsPage() {
     mutation.mutate({
       shufflerConfig: {
         ...(org?.shufflerConfig || {}),
+        lastGlobalShuffleDate: org?.shufflerConfig?.lastGlobalShuffleDate || new Date().toISOString(),
         statuses: shufflingLeads.split('\n').map(s => s.trim()).filter(Boolean),
         shuffleBeforeDays: parseInt(shuffleBefore) || 0,
+        restPeriodDays: parseInt(restPeriod) || 0,
         shuffleTime: shuffleTime,
         shuffleFromDate: shuffleFromDate,
         shuffleToDate: shuffleToDate,
@@ -128,6 +135,27 @@ export default function ShufflerSettingsPage() {
   const filteredStatuses = statuses.filter(
     (status) => status.id !== "won" && status.id !== "lost" && status.id !== "closed_won" && status.id !== "closed_lost"
   )
+
+  const lastGlobalShuffleDate = org?.shufflerConfig?.lastGlobalShuffleDate;
+  const daysBeforeVal = parseInt(shuffleBefore) || 0;
+  const restPeriodVal = parseInt(restPeriod) || 0;
+  
+  let daysPassed = 0;
+  if (lastGlobalShuffleDate) {
+    const timeDiff = new Date().getTime() - new Date(lastGlobalShuffleDate).getTime();
+    daysPassed = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+  }
+  
+  const daysRemaining = Math.max(0, daysBeforeVal - daysPassed);
+
+  const nextShuffleDateObj = new Date();
+  nextShuffleDateObj.setDate(nextShuffleDateObj.getDate() + daysRemaining);
+  const nextShuffleDateStr = nextShuffleDateObj.toLocaleDateString();
+
+  const cutoffDateObj = new Date();
+  cutoffDateObj.setHours(0, 0, 0, 0);
+  cutoffDateObj.setDate(cutoffDateObj.getDate() - restPeriodVal);
+  const cutoffDateStr = cutoffDateObj.toLocaleDateString();
 
   const handleStatusSelect = (val: string) => {
     if (!val) return;
@@ -298,67 +326,84 @@ export default function ShufflerSettingsPage() {
                 </Select>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-6 mt-4">
-                <div className="space-y-2 flex-1">
-                  <Label htmlFor="shuffle-from-date">Shuffle From</Label>
-                  <Input
-                    id="shuffle-from-date"
-                    type="date"
-                    value={shuffleFromDate}
-                    onChange={(e) => setShuffleFromDate(e.target.value)}
-                  />
+              {isCustomPeriod ? (
+                <div className="flex flex-col sm:flex-row gap-6 mt-auto pt-2">
+                  <div className="space-y-2 flex-1">
+                    <Label htmlFor="shuffle-from-date">Shuffle From</Label>
+                    <Input
+                      id="shuffle-from-date"
+                      type="date"
+                      value={shuffleFromDate}
+                      onChange={(e) => setShuffleFromDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <Label htmlFor="shuffle-to-date">Shuffle To</Label>
+                    <Input
+                      id="shuffle-to-date"
+                      type="date"
+                      value={shuffleToDate}
+                      onChange={(e) => setShuffleToDate(e.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2 flex-1">
-                  <Label htmlFor="shuffle-to-date">Shuffle To</Label>
-                  <Input
-                    id="shuffle-to-date"
-                    type="date"
-                    value={shuffleToDate}
-                    onChange={(e) => setShuffleToDate(e.target.value)}
-                  />
-                </div>
-              </div>
+              ) : (
+                <div className="flex flex-col sm:flex-row gap-6 mt-auto pt-2">
+                  <div className="space-y-2 flex-1">
+                    <Label htmlFor="shuffle-before">Shuffle after (days)</Label>
+                    <Input
+                      id="shuffle-before"
+                      type="number"
+                      min="0"
+                      value={shuffleBefore}
+                      onChange={(e) => setShuffleBefore(e.target.value)}
+                      placeholder="e.g. 10"
+                    />
+                  </div>
 
-              <div className="flex flex-col sm:flex-row gap-6 mt-auto pt-2">
-                <div className="space-y-2 flex-1">
-                  <Label htmlFor="shuffle-before">Auto shuffle count (days)</Label>
-                  <Input
-                    id="shuffle-before"
-                    type="number"
-                    min="0"
-                    value={shuffleBefore}
-                    onChange={(e) => setShuffleBefore(e.target.value)}
-                    placeholder="e.g. 5"
-                  />
-                </div>
+                  <div className="space-y-2 flex-1">
+                    <Label htmlFor="rest-period">Rest Period (Days)</Label>
+                    <Input
+                      id="rest-period"
+                      type="number"
+                      min="0"
+                      value={restPeriod}
+                      onChange={(e) => setRestPeriod(e.target.value)}
+                      placeholder="e.g. 3"
+                    />
+                  </div>
 
-                <div className="space-y-2 flex-1">
-                  <Label htmlFor="shuffle-time">Time</Label>
-                  <Input
-                    id="shuffle-time"
-                    type="time"
-                    value={shuffleTime}
-                    onChange={(e) => setShuffleTime(e.target.value)}
-                    className="w-full"
-                  />
+                  <div className="space-y-2 flex-1">
+                    <Label htmlFor="shuffle-time">Time</Label>
+                    <Input
+                      id="shuffle-time"
+                      type="time"
+                      value={shuffleTime}
+                      onChange={(e) => setShuffleTime(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Button
                   className="w-full sm:w-auto"
                   variant="outline"
                   type="button"
+                  onClick={() => setIsCustomPeriod(!isCustomPeriod)}
                 >
                   Change Period
                 </Button>
-                <Button
-                  className="w-full sm:w-auto"
-                  onClick={handleSave}
-                  disabled={mutation.isPending}
-                >
-                  {mutation.isPending ? "Saving..." : "Set Shuffler"}
-                </Button>
+                {!isCustomPeriod && (
+                  <Button
+                    className="w-full sm:w-auto"
+                    onClick={handleSave}
+                    disabled={mutation.isPending}
+                  >
+                    {mutation.isPending ? "Saving..." : "Set Shuffler"}
+                  </Button>
+                )}
                 <Button
                   variant="secondary"
                   className="w-full sm:w-auto"
@@ -452,16 +497,37 @@ export default function ShufflerSettingsPage() {
               </div>
 
               <div className="space-y-2 flex flex-col">
-                <Label>Date Range (Selected)</Label>
+                <Label>{isCustomPeriod ? "Date Range (Selected)" : "Auto Shuffle Configuration"}</Label>
                 <div className="w-full rounded-md border border-input bg-transparent px-3 py-3 text-sm shadow-sm flex flex-wrap gap-2 content-start min-h-[50px]">
-                  {shuffleFromDate || shuffleToDate ? (
-                    <span className="text-foreground text-sm font-medium">
-                      {shuffleFromDate ? new Date(shuffleFromDate).toLocaleDateString() : 'from the begining'} 
-                      {' - '} 
-                      {shuffleToDate ? new Date(shuffleToDate).toLocaleDateString() : 'last day'}
-                    </span>
+                  {isCustomPeriod ? (
+                    (shuffleFromDate || shuffleToDate) ? (
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-foreground text-sm font-medium">
+                          {shuffleFromDate ? new Date(shuffleFromDate).toLocaleDateString() : 'from the begining'}
+                          {' - '}
+                          {shuffleToDate ? new Date(shuffleToDate).toLocaleDateString() : 'last day'}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => { setShuffleFromDate(""); setShuffleToDate(""); }}
+                        >
+                          Clear
+                        </Button>
+                      </div>
+                    ) : (
+                      <span className="text-muted-foreground w-full text-center mt-2">No date range selected...</span>
+                    )
                   ) : (
-                    <span className="text-muted-foreground w-full text-center mt-2">No date range selected...</span>
+                    (shuffleBefore && shuffleTime) ? (
+                      <span className="text-foreground text-sm font-medium">
+                        Auto shuffling on {nextShuffleDateStr} at {shuffleTime}. Shuffling leads assigned before {cutoffDateStr}.
+                      </span>
+                    ) : (
+                      <span className="text-muted-foreground w-full text-center mt-2">Configuration incomplete...</span>
+                    )
                   )}
                 </div>
               </div>

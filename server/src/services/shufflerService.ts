@@ -30,8 +30,25 @@ export const runShuffler = async () => {
             console.log(`[ShufflerService] Executing shuffle for Org: ${org.name}`);
 
             const daysBefore = parseInt(config.shuffleBeforeDays) || 0;
+            const restPeriodDays = parseInt(config.restPeriodDays) || 0;
+
+            const lastGlobalShuffle = config.lastGlobalShuffleDate ? new Date(config.lastGlobalShuffleDate) : new Date();
+            const nowTime = new Date();
+
+            // Calculate full days passed
+            const msPassed = nowTime.getTime() - lastGlobalShuffle.getTime();
+            const daysPassed = Math.floor(msPassed / (1000 * 60 * 60 * 24));
+
+            if (daysPassed < daysBefore && config.lastGlobalShuffleDate) {
+                console.log(`[ShufflerService] Org ${org.name} not ready for global shuffle. Days passed: ${daysPassed}/${daysBefore}`);
+                continue;
+            }
+
+            // Cutoff is based on REST PERIOD now, not the global interval
             const cutoffDate = new Date();
-            cutoffDate.setDate(cutoffDate.getDate() - daysBefore);
+            cutoffDate.setHours(0, 0, 0, 0);
+            cutoffDate.setDate(cutoffDate.getDate() - restPeriodDays);
+            console.log(`[ShufflerService] Rest Period: ${restPeriodDays} days. Cutoff Date: ${cutoffDate}`);
 
             // Find eligible leads
             // Only shuffle leads that are currently owned by the selected users
@@ -40,7 +57,7 @@ export const runShuffler = async () => {
                     organisationId: org.id,
                     isDeleted: false,
                     status: { in: config.statuses },
-                    lastAssignedAt: { lt: cutoffDate },
+                    createdAt: { lt: cutoffDate },
                     assignedToId: { in: config.users || [] }
                 },
                 select: { id: true, assignedToId: true },
@@ -142,14 +159,17 @@ export const runShuffler = async () => {
             // After all assignments, update the lastAssignedIndex for the next run
             lastAssignedIndex = nextIndex;
 
-            // Save the persistent round-robin pointer
-            if (lastAssignedIndex !== -1 && activeUsers[lastAssignedIndex]) {
-                const updatedConfig = { ...(org.shufflerConfig as Record<string, any>), lastAssignedUserId: activeUsers[lastAssignedIndex].id };
-                await prisma.organisation.update({
-                    where: { id: org.id },
-                    data: { shufflerConfig: updatedConfig }
-                });
-            }
+            // Save the persistent round-robin pointer AND reset the global countdown date
+            const updatedConfig = {
+                ...(org.shufflerConfig as Record<string, any>),
+                lastAssignedUserId: activeUsers[lastAssignedIndex]?.id,
+                lastGlobalShuffleDate: new Date().toISOString()
+            };
+
+            await prisma.organisation.update({
+                where: { id: org.id },
+                data: { shufflerConfig: updatedConfig }
+            });
 
             console.log(`[ShufflerService] Successfully reassigned ${reassignedCount} leads in Org: ${org.name}`);
         }
@@ -182,13 +202,19 @@ export const forceShuffleOrg = async (organisationId: string) => {
             return { success: false, message: 'No users selected for shuffling. Please select users first.' };
         }
 
-        // Find eligible leads (bypass date checks, bypass time checks)
-        // Only shuffle leads that are currently owned by the selected users
+        const restPeriodDays = parseInt(config.restPeriodDays) || 0;
+        const cutoffDate = new Date();
+        cutoffDate.setHours(0, 0, 0, 0);
+        cutoffDate.setDate(cutoffDate.getDate() - restPeriodDays);
+
+        // Find eligible leads (bypass global interval date checks, bypass time checks, BUT RESPECT REST PERIOD)
+        // Only shuffle leads that are currently owned by the selected users and older than the rest period cutoff
         const eligibleLeads = await prisma.lead.findMany({
             where: {
                 organisationId: org.id,
                 isDeleted: false,
                 status: { in: config.statuses },
+                createdAt: { lt: cutoffDate },
                 assignedToId: { in: config.users || [] }
             },
             select: { id: true, assignedToId: true },
@@ -301,3 +327,7 @@ export const forceShuffleOrg = async (organisationId: string) => {
         return { success: false, message: 'Failed to execute shuffle. Check server logs.' };
     }
 };
+
+// touch
+// touch2
+// restart
